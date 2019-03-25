@@ -1,0 +1,15 @@
+# user configuration
+config.ini
+
+# node dependancy
+node_modules/
+
+# ftp configuration
+.ftpconfig
+.ftpignore
+
+# macOS
+.DS_Store
+
+# typeScript dist
+dist/
