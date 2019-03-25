@@ -1,4 +1,10 @@
 [global]
-locale=french
+locale=english
+
+mqtt_host=localhost
+mqtt_port=1883
+
+mpd_host=localhost
+mqtt_port=6600
 
 [secret]
