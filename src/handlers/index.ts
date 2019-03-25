@@ -1,6 +1,15 @@
 import { translation, logger } from '../utils'
-import { pokemonHandler } from './pokemon'
 import { FlowContinuation, IntentMessage, FlowActionReturn } from 'hermes-javascript'
+
+import { playMusicHandler } from './playMusic'
+import { previousSongHandler } from './previousSong'
+import { nextSongHandler } from './nextSong'
+import { speakerInterruptHandler } from './speakerInterrupt'
+import { resumeMusicHandler } from './resumeMusic'
+import { volumUpHandler } from './volumUp'
+import { volumDownHandler } from './volumDown'
+import { volumSetHandler } from './volumSet'
+import { getInfoHandler } from './getInfo'
 
 export type Handler = (
     message: IntentMessage,
@@ -11,7 +20,7 @@ export type Handler = (
 // Wrap handlers to gracefully capture errors
 const handlerWrapper = (handler: Handler): Handler => (
     async (message, flow, ...args) => {
-        logger.debug('message: %O', message)
+        //logger.debug('message: %O', message)
         try {
             // Run handler until completion
             const tts = await handler(message, flow, ...args)
@@ -29,5 +38,13 @@ const handlerWrapper = (handler: Handler): Handler => (
 
 // Add handlers here, and wrap them.
 export default {
-    pokemon: handlerWrapper(pokemonHandler)
+    playMusic: handlerWrapper(playMusicHandler),
+    previousSong: handlerWrapper(previousSongHandler),
+    nextSong: handlerWrapper(nextSongHandler),
+    speakerInterrupt: handlerWrapper(speakerInterruptHandler),
+    resumeMusic: handlerWrapper(resumeMusicHandler),
+    volumUp: handlerWrapper(volumUpHandler),
+    volumDown: handlerWrapper(volumDownHandler),
+    volumSet: handlerWrapper(volumSetHandler),
+    getInfo: handlerWrapper(getInfoHandler)
 }
