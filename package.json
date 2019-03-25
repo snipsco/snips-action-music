@@ -39,6 +39,7 @@
     "hermes-javascript": "^0.3.5",
     "i18next": "^15.0.4",
     "ini": "^1.3.5",
+    "mpc-js": "^1.2.1",
     "node-fetch": "^2.3.0",
     "supports-color": "^6.1.0",
     "wretch": "^1.4.2",
