@@ -3,7 +3,8 @@ import { IntentMessage, slotType, NluSlot } from 'hermes-javascript'
 import {
     INTENT_CONFIDENCE_THRESHOLD,
     SLOT_CONFIDENCE_THRESHOLD,
-    ASR_TOKENS_CONFIDENCE_THRESHOLD
+    ASR_TOKENS_CONFIDENCE_THRESHOLD,
+    SCENARIO_TABLE
 } from '../constants'
 
 export interface musicInfoRes {
@@ -44,5 +45,29 @@ export const musicInfoExtractor = function(msg: IntentMessage): musicInfoRes {
     })
 
     logger.debug('Extracted: %o', res)
+    return res
+}
+
+export const getScenario = function(factor: musicInfoRes): string {
+    let input_bin: number = 0b0000
+
+    if (factor.songName) {
+        input_bin |= 0b1000 
+    }
+    if (factor.albumName) {
+        input_bin |= 0b0100 
+    }
+    if (factor.artistName) {
+        input_bin |= 0b0010 
+    }
+    if (factor.playlistName) {
+        input_bin |= 0b0001 
+    }
+
+    let res = SCENARIO_TABLE[input_bin]
+
+    if (!res) {
+        throw new Error('undefined scenario')
+    } 
     return res
 }
