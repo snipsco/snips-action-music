@@ -1,9 +1,7 @@
 import { message, logger, camelize } from '../utils'
 import { IntentMessage, slotType, NluSlot } from 'hermes-javascript'
 import {
-    INTENT_CONFIDENCE_THRESHOLD,
     SLOT_CONFIDENCE_THRESHOLD,
-    ASR_TOKENS_CONFIDENCE_THRESHOLD,
     SCENARIO_TABLE
 } from '../constants'
 
@@ -16,14 +14,6 @@ export interface musicInfoRes {
 
 export const musicInfoExtractor = function(msg: IntentMessage): musicInfoRes {
     //logger.debug('message intent: %o', msg)
-
-    if (msg.intent.confidenceScore < INTENT_CONFIDENCE_THRESHOLD) {
-        throw new Error('intentNotRecognized -> lowThreshold')
-    }
-
-    if (message.getAsrConfidence(msg) < ASR_TOKENS_CONFIDENCE_THRESHOLD) {
-        throw new Error('intentNotRecognized -> lowGeometricMean')
-    }
 
     let slot_names_raw = [
         'song_name',
@@ -67,7 +57,7 @@ export const getScenario = function(factor: musicInfoRes): string {
     let res = SCENARIO_TABLE[input_bin]
 
     if (!res) {
-        throw new Error('undefined scenario')
+        throw new Error('undefinedScenario')
     } 
     return res
 }
