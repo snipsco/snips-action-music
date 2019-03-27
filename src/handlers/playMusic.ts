@@ -9,7 +9,6 @@ import {
 
 export const playMusicHandler: Handler = async function (msg, flow, hermes, player) {
     logger.debug('playMusicHandler')
-    
     let music: musicInfoRes = musicInfoExtractor(msg)
 
     if (!music) {
@@ -19,24 +18,27 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
 
     let scenario: string = getScenario(music)
 
-    // Play by song's name
-    if (scenario === 'A') {
-        player.playBySongName(music.songName)
+    // Play by condition composed of song?, artist?, album? (list)
+    if (
+        scenario === 'A' ||
+        scenario === 'B' ||
+        scenario === 'C'
+    ) {
+        logger.debug('Scenario A - C')
+        await player.createPlayListIfPossible(
+            music.songName, 
+            music.albumName, 
+            music.artistName
+        )
     }
 
-    if (scenario === 'B') {
-        
-    }
-
-    if (scenario === 'C') {
-        player.byArtistName(music.artistName)
-    }
-
+    // Load an exist playlist
     if (scenario === 'D') {
-        
+        logger.debug('Scenario D')
+        await player.loadPlaylistIfPossible(music.playlistName)
     }
 
-    // End the dialog session.
+    await player.play()
     flow.end()
 
     // Return the TTS speech.
