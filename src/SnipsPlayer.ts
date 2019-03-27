@@ -137,7 +137,7 @@ export class SnipsPlayer {
                 throw new Error('notFound')
             } else {
                 return this.clear()
-    }
+            }
         })
         .catch(() => {
             throw new Error('notFound')
