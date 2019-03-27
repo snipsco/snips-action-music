@@ -83,18 +83,38 @@ export class SnipsPlayer {
 
     }
 
-    byArtistName(artist: string) {
-        this.player.currentPlaylist.clear()
-        this.player.database.searchAdd([['Artist', artist]])
-        this.play()
+    __checkExistancePlaylist(playlist: string) {
+        return this.player.storedPlaylists.listPlaylist(`${playlist.toLowerCase()}.m3u`)
     }
 
-    playByPlaylistName(playlist: string) {
-
+    __loadSongFromSavedPlaylist(playlist: string) {
+        return this.player.storedPlaylists.load(`${playlist.toLowerCase()}.m3u`)
     }
 
-    createPlayList(song: string, album: string, artist: string) {
-          
+    /**
+     * Check if the required playlist is exist.
+     * If yes, clear the current list and load the target list.
+     * If no, throw an error 'notFound' which will be handled by handler wrapper.
+     * 
+     * @param playlist 
+     */
+    loadPlaylistIfPossible(playlist: string) {
+        return this.__checkExistancePlaylist(playlist)
+        .then((res) => {
+            if (!res.length) {
+                logger.debug(res)
+                logger.debug('did not pass checking')
+                throw new Error('notFound')
+            } else {
+                return this.clear()
+    }
+        })
+        .catch(() => {
+            throw new Error('notFound')
+        })
+        .then(() => {
+            return this.__loadSongFromSavedPlaylist(playlist)
+        })
     }
 
     __startMonitoring() {
