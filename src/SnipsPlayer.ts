@@ -49,16 +49,28 @@ export class SnipsPlayer {
     }
 
     // Player controlling commands
+    previous() {
+        return this.player.playback.previous()
+    }
+
     next() {
-        this.player.playback.next()
+        return this.player.playback.next()
     }
 
     play() {
-        this.player.playback.play()
+        return this.player.playback.play()
+    }
+
+    pause() {
+        return this.player.playback.pause()
     }
 
     stop() {
-        this.player.playback.stop()
+        return this.player.playback.stop()
+    }
+
+    clear() {
+        return this.player.currentPlaylist.clear()
     }
 
     // Interfacing to 'playMusic' intent
