@@ -74,13 +74,43 @@ export class SnipsPlayer {
     }
 
     // Interfacing to 'playMusic' intent
-    playBySongName(song: string) {
-        let res = this.player.database.searchAdd([['Title', song]])
-        logger.debug(res)
+    __checkExistance(song: string, album: string, artist: string) {
+        return this.player.database.search([
+            ['Title', song ? song : ''], 
+            ['Album', album ? album : ''], 
+            ['Artist', artist ? artist : '']
+        ])
     }
 
-    playByAlbumName(album: string) {
+    __createPlayList(song: string, album: string, artist: string) {
+        return this.player.database.searchAdd([
+            ['Title', song ? song : ''], 
+            ['Album', album ? album : ''], 
+            ['Artist', artist ? artist : '']
+        ])
+    }
 
+    /**
+     * Check if the inputs is sufficient to create a playlist.
+     * If yes, clear the current list and create the new list.
+     * If no, throw an error 'notFound' which will be handled by handler wrapper.
+     * 
+     * @param song 
+     * @param album 
+     * @param artist 
+     */
+    createPlayListIfPossible(song: string, album: string, artist: string) {
+        return this.__checkExistance(song, album, artist)
+        .then((res) => {
+            if (!res.length) {
+                throw new Error('notFound')
+            } else {
+                return this.clear()
+            }
+        })
+        .then(() => {
+            return this.__createPlayList(song, album, artist)
+        })
     }
 
     __checkExistancePlaylist(playlist: string) {
