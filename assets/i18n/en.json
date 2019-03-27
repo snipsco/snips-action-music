@@ -1,14 +1,82 @@
 {
     "error": {
-        "mqtt": "Sorry, there was a communication error with the Snips platform",
-        "config": "Sorry, there was an error with your config file.",
-        "locale": "Sorry, there was an error with your language settings.",
-        "intentNotRecognized": "Sorry, I did not understand your request.",
-        "APIResponse": "Sorry, there was an issue with the service provider.",
-        "APIRequest": "Sorry, the service provider is unreachable.",
-        "unspecific": "Oops, something went wrong."
+        "mqtt": [
+            "Sorry, there was a communication error with the Snips platform"
+        ],
+        "config": [
+            "Sorry, there was an error with your config file."
+        ],
+        "locale": [
+            "Sorry, there was an error with your language settings."
+        ],
+        "unspecific": [
+            "Oops, something went wrong."
+        ],
+        "asrError": [
+            "I don't think I understood",
+            "I'm not sure I understood",
+            "Sorry I didn't get that"
+        ],
+        "nluIntentErrorStanderd": [
+            "Sorry I don't know how to help you with that",
+            "I don't think I can help you with that"
+        ],
+        "nluIntentErrorBad": [
+            "Sorry I don't think I understood",
+            "I don't think I understood"
+        ],
+        "nluSlotErrorStanderd": [
+            "Sorry I didn't quite get that, Feel free to try again when you are ready",
+            "Sorry I didn't quite get that"
+        ],
+        "nluSlotErrorBad": [
+            "Sorry I didn't quite get that"
+        ],
+        "notFound": [
+            "Sorry I have ten thousand songs stored. Try asking for something else!",
+            "Sorry I don't think I have that in my offline library",
+            "Sorry I don't have that one",
+            "I'm afraid I don't have that one",
+            "I only have ten thousand songs, try with something else",
+            "Sorry I only have ten thousand songs and I don't have that one",
+            "I have a quite small offline library, try some other music instead" 
+        ],
+        "nothingToPlay": [
+            "There is nothing playing right now, if you want to play any music just ask for it",
+            "There is nothing playing right now",
+            "I'm not playing anything at the moment"
+        ]
     },
-    "pokemon": {
-        "info": "{{ name }}'s weight is {{ weight }} and its height is {{ height }}."
+    "commonInfo": {
+        "resumePlay": [
+            "Resuming music from local library"
+        ],
+        "playTrack": [
+            "Playing the song {{ track }}",
+            "Playing {{ track }}",
+            "{{ track }"
+        ],
+        "playTrackArtist": [
+            "Playing {{track}} by {{artist}}",
+            "Playing the song {{track}} by {{artist}}",
+            "Playing {{track}}"
+        ],
+        "playAlbum": [
+            "Playing the album {{album}}",
+            "Playing songs from album {{album}}"
+        ],
+        "playAlbumArtist": [
+            "Playing the album {{album}} by {{artist}}"
+        ],
+        "playArtist": [
+            "Playing music by {{artist}}",
+            "Playing songs by {{artist}}",
+            "Playing popular songs by {{artist}}"
+        ],
+        "playPlaylist": [
+            "Playing {{playlist}}",
+            "Playing {{playlist}} music",
+            "Playing a {{playlist}} playlist"
+        ]
     }
 }
