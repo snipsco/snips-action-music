@@ -23,7 +23,7 @@ export class SnipsPlayer {
     
     // Player settings
     volume: number = 80
-    volumeSilence: number = 40
+    volumeSilence: number = 20
     enableRandom: boolean = true
 
     // Player status
@@ -211,6 +211,7 @@ export class SnipsPlayer {
         this.player.addListener('ready', () => {
             this.isReady = true
             this.setVolumeToNormal()
+            this.stop()
             logger.info('MPD client is ready to use')
         })
     
