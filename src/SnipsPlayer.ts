@@ -20,6 +20,7 @@ export class SnipsPlayer {
     
     // Player settings
     volume: number = 80
+    volumeSilence: number = 40
     enableRandom: boolean = true
 
     // Player status
@@ -71,6 +72,39 @@ export class SnipsPlayer {
 
     clear() {
         return this.player.currentPlaylist.clear()
+    }
+
+    /**
+     * Wrapper method
+     * 
+     * @param volume 
+     */
+    __setVolume(volume: number) {
+        return this.player.playbackOptions.setVolume(volume)
+    }
+
+    /**
+     * Set volume to a given level
+     * 
+     * @param volume 
+     */
+    saveVolume(volume: number) {
+        this.volume = volume
+        return this.__setVolume(this.volume)
+    }
+
+    /**
+     * Set the volume to silence level
+     */
+    setVolumeToSilence() {
+        return this.__setVolume(this.volumeSilence)
+    }
+
+    /**
+     * Set the volume back to normal level
+     */
+    setVolumeToNormal() {
+        return this.__setVolume(this.volume)
     }
 
     // Interfacing to 'playMusic' intent
@@ -150,6 +184,7 @@ export class SnipsPlayer {
     __startMonitoring() {
         this.player.addListener('ready', () => {
             this.isReady = true
+            this.setVolumeToNormal()
             logger.info('MPD client is ready to use')
         })
     
