@@ -9,11 +9,11 @@ import {
 
 export const playMusicHandler: Handler = async function (msg, flow, hermes, player) {
     logger.debug('playMusicHandler')
-    let music: musicInfoRes = musicInfoExtractor(msg)
+    flow.end()
+    let music: musicInfoRes | null = musicInfoExtractor(msg)
 
     if (!music) {
-        flow.end()
-        return
+        throw new Error('nluIntentErrorStanderd')
     }
 
     let scenario: string = getScenario(music)
@@ -39,7 +39,6 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
     }
 
     await player.play()
-    flow.end()
 
     // Return the TTS speech.
     // const i18n = i18nFactory.get()
