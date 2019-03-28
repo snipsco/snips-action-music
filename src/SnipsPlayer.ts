@@ -9,6 +9,9 @@ interface SnipsPlayerInitOptions {
     enableRandom?: boolean
 }
 
+/**
+ * Music player wrapper, interfacing intent handler with low level apis.
+ */
 export class SnipsPlayer {
     // Main object to be interfaced
     dialog: Dialog
@@ -108,6 +111,12 @@ export class SnipsPlayer {
     }
 
     // Interfacing to 'playMusic' intent
+    /**
+     * Wrapper method, check if there are songs found by the condtions
+     * @param song 
+     * @param album 
+     * @param artist 
+     */
     __checkExistance(song: string, album: string, artist: string) {
         return this.player.database.search([
             ['Title', song ? song : ''], 
@@ -116,6 +125,12 @@ export class SnipsPlayer {
         ])
     }
 
+    /**
+     * Wrapper method, found the songs by condtiosn, add to the playlist
+     * @param song 
+     * @param album 
+     * @param artist 
+     */
     __createPlayList(song: string, album: string, artist: string) {
         return this.player.database.searchAdd([
             ['Title', song ? song : ''], 
@@ -147,10 +162,18 @@ export class SnipsPlayer {
         })
     }
 
+    /**
+     * Check if the provided playlist is exist
+     * @param playlist 
+     */
     __checkExistancePlaylist(playlist: string) {
         return this.player.storedPlaylists.listPlaylist(`${playlist.toLowerCase()}.m3u`)
     }
 
+    /**
+     * Load the provided playlist to current playlist
+     * @param playlist 
+     */
     __loadSongFromSavedPlaylist(playlist: string) {
         return this.player.storedPlaylists.load(`${playlist.toLowerCase()}.m3u`)
     }
@@ -181,6 +204,9 @@ export class SnipsPlayer {
         })
     }
 
+    /**
+     * Add event listener to the MPD. When it's ready, initialise the play status
+     */
     __startMonitoring() {
         this.player.addListener('ready', () => {
             this.isReady = true
