@@ -6,9 +6,9 @@ import { previousSongHandler } from './previousSong'
 import { nextSongHandler } from './nextSong'
 import { speakerInterruptHandler } from './speakerInterrupt'
 import { resumeMusicHandler } from './resumeMusic'
-import { volumUpHandler } from './volumUp'
-import { volumDownHandler } from './volumDown'
-import { volumSetHandler } from './volumSet'
+import { volumeUpHandler } from './volumeUp'
+import { volumeDownHandler } from './volumeDown'
+import { volumeSetHandler } from './volumeSet'
 import { getInfoHandler } from './getInfo'
 
 import {
@@ -59,9 +59,9 @@ export default {
     nextSong: handlerWrapper(nextSongHandler),
     speakerInterrupt: handlerWrapper(speakerInterruptHandler),
     resumeMusic: handlerWrapper(resumeMusicHandler),
-    volumUp: handlerWrapper(volumUpHandler),
-    volumDown: handlerWrapper(volumDownHandler),
-    volumSet: handlerWrapper(volumSetHandler),
+    volumeUp: handlerWrapper(volumeUpHandler),
+    volumeDown: handlerWrapper(volumeDownHandler),
+    volumeSet: handlerWrapper(volumeSetHandler),
     getInfo: handlerWrapper(getInfoHandler)
 }
 

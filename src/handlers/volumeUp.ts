@@ -2,8 +2,8 @@ import { i18nFactory } from '../factories'
 import { Handler } from './index'
 import { logger } from '../utils/logger'
 
-export const volumUpHandler: Handler = async function (msg, flow, hermes) {
-    logger.debug('volumUpHandler')
+export const volumeUpHandler: Handler = async function (msg, flow, hermes) {
+    logger.debug('volumeUpHandler')
     // Ready to be set 
 
     flow.end()

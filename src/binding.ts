@@ -34,16 +34,16 @@ export const onIntentDetected = function (hermes: Hermes, player: SnipsPlayer) {
             action: (msg, flow) => handlers.resumeMusic(msg, flow, hermes, player)
         },
         {
-            intent: `${SNIPS_PREFIX}volumUp`,
-            action: (msg, flow) => handlers.volumUp(msg, flow, hermes, player)
+            intent: `${SNIPS_PREFIX}volumeUp`,
+            action: (msg, flow) => handlers.volumeUp(msg, flow, hermes, player)
         },
         {
-            intent: `${SNIPS_PREFIX}volumDown`,
-            action: (msg, flow) => handlers.volumDown(msg, flow, hermes, player)
+            intent: `${SNIPS_PREFIX}volumeDown`,
+            action: (msg, flow) => handlers.volumeDown(msg, flow, hermes, player)
         },
         {
-            intent: `${SNIPS_PREFIX}volumSet`,
-            action: (msg, flow) => handlers.volumSet(msg, flow, hermes, player)
+            intent: `${SNIPS_PREFIX}volumeSet`,
+            action: (msg, flow) => handlers.volumeSet(msg, flow, hermes, player)
         },
         {
             intent: `${SNIPS_PREFIX}getInfo`,
