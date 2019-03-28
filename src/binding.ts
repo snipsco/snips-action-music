@@ -1,6 +1,11 @@
 import { Dialog, Hermes } from 'hermes-javascript'
 import { SNIPS_PREFIX } from './constants'
 import handlers from './handlers'
+import { 
+    sessionStarted,
+    sessionEnded
+} from './handlers'
+
 import { SnipsPlayer } from './snipsPlayer';
 
 export const onIntentDetected = function (hermes: Hermes, player: SnipsPlayer) {
@@ -52,11 +57,11 @@ export const onSessionToggle = function (hermes: Hermes, player: SnipsPlayer) {
 
     // Subscribe to system event
     dialog.on('session_started', message => {
-
+        sessionStarted(message, hermes, player)
     })
 
     // Subscribe to system event
     dialog.on('session_ended', message => {
-        // turn back the music volum
+        sessionEnded(message, hermes, player)
     })
 }

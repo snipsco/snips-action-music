@@ -1,7 +1,9 @@
-import { Dialog } from 'hermes-javascript'
+import { Hermes, SessionStartedMessage } from 'hermes-javascript'
+import { SnipsPlayer } from '../snipsPlayer';
 
-export const sessionStartedHandler = function(dialog: Dialog){
+export const sessionStarted = function(msg: SessionStartedMessage, hermes: Hermes, player: SnipsPlayer){
     // lower the music volum 
+    player.setVolumeToSilence()
 
     // turn off the feedback sound
 }

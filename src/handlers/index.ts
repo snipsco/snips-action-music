@@ -64,3 +64,6 @@ export default {
     volumSet: handlerWrapper(volumSetHandler),
     getInfo: handlerWrapper(getInfoHandler)
 }
+
+export * from './sessionEnded'
+export * from './sessionStarted'
