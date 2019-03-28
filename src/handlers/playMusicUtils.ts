@@ -12,7 +12,7 @@ export interface musicInfoRes {
     artistName?: string
 }
 
-export const musicInfoExtractor = function(msg: IntentMessage): musicInfoRes {
+export const musicInfoExtractor = function(msg: IntentMessage): musicInfoRes | null {
     //logger.debug('message intent: %o', msg)
 
     let slot_names_raw = [
@@ -35,7 +35,7 @@ export const musicInfoExtractor = function(msg: IntentMessage): musicInfoRes {
     })
 
     logger.debug('Extracted: %o', res)
-    return res
+    return (Object.keys(res).length === 0) ? null : res
 }
 
 export const getScenario = function(factor: musicInfoRes): string {
