@@ -1,14 +1,25 @@
-import { i18nFactory } from '../factories'
 import { Handler } from './index'
-import { logger } from '../utils/logger'
+import { logger, message } from '../utils'
+import { checkVolumeRange } from './volumeSetUtils'
+import {
+    VOLOME_STEP_DEFAULT,
+    SLOT_CONFIDENCE_THRESHOLD
+} from '../constants'
+import { NluSlot, slotType } from 'hermes-javascript'
 
-export const volumeDownHandler: Handler = async function (msg, flow, hermes) {
+export const volumeDownHandler: Handler = async function (msg, flow, hermes, player) {
     logger.debug('volumeDownHandler')
-    // Ready to be set 
-
     flow.end()
 
-    // Return the TTS speech.
-    // const i18n = i18nFactory.get()
-    // return i18n()
+    let change: any = VOLOME_STEP_DEFAULT
+    let slot: NluSlot<slotType.custom> | null = message.getSlotsByName(msg, 'volume_lower', {
+        onlyMostConfident: true,
+        threshold: SLOT_CONFIDENCE_THRESHOLD
+    })
+    if (slot) {
+        change = slot.value.value
+    }
+    let newVolume = checkVolumeRange(player.volume - change)
+
+    await player.saveVolume(newVolume)
 }

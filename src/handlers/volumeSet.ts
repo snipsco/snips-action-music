@@ -4,9 +4,8 @@ import { extractVolumeNumber } from './volumeSetUtils'
 
 export const volumeSetHandler: Handler = async function (msg, flow, hermes, player) {
     logger.debug('volumeSetHandler')
-
-    let volume = extractVolumeNumber(msg)
-
-    player.saveVolume(volume)
     flow.end()
+    
+    let volume = extractVolumeNumber(msg)
+    await player.saveVolume(volume)
 }
