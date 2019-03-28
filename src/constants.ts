@@ -37,3 +37,7 @@ export const SCENARIO_TABLE = {
     0b1110: 'A',
     0b1111: 'A'
 }
+export const VOLUME_SILENCE = 20
+export const VOLUME_MINIMUM = 20
+export const VOLUME_MAXIMUM = 100
+export const VOLOME_STEP_DEFAULT = 15

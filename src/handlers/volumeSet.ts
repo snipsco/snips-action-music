@@ -1,14 +1,12 @@
-import { i18nFactory } from '../factories'
 import { Handler } from './index'
 import { logger } from '../utils/logger'
+import { extractVolumeNumber } from './volumeSetUtils'
 
-export const volumeSetHandler: Handler = async function (msg, flow, hermes) {
+export const volumeSetHandler: Handler = async function (msg, flow, hermes, player) {
     logger.debug('volumeSetHandler')
-    // Ready to be set 
 
+    let volume = extractVolumeNumber(msg)
+
+    player.saveVolume(volume)
     flow.end()
-
-    // Return the TTS speech.
-    // const i18n = i18nFactory.get()
-    // return i18n()
 }
