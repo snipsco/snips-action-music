@@ -1,6 +1,5 @@
-import { i18nFactory } from '../factories'
 import { Handler } from './index'
-import { logger } from '../utils/logger'
+import { logger, translation } from '../utils'
 import { 
     musicInfoExtractor,
     musicInfoRes,
@@ -40,7 +39,28 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
 
     await player.play()
 
-    // Return the TTS speech.
-    // const i18n = i18nFactory.get()
-    // return i18n()
+    switch (scenario) {
+        case 'A':
+            return music.artistName ? translation.randomTranslation('info.playTrackArtist' ,{
+                track: music.songName,
+                artist: music.artistName
+            }): translation.randomTranslation('info.playTrack', {
+                track: music.songName
+            })
+        case 'B':
+            return music.albumName ? translation.randomTranslation('info.playAlbumArtist', {
+                album: music.albumName,
+                artist: music.artistName
+            }) : translation.randomTranslation('info.playAlbum', {
+                album: music.albumName
+            })
+        case 'C':
+            return translation.randomTranslation('info.playArtist', {
+                artist: music.artistName
+            })
+        case 'D': 
+            return translation.randomTranslation('info.playPlaylist', {
+                playlist: music.playlistName
+            })
+    }
 }
