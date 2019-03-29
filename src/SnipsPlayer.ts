@@ -258,26 +258,4 @@ export class SnipsPlayer {
             return this.__loadSongFromSavedPlaylist(playlist)
         })
     }
-
-    /**
-     * Add event listener to the MPD. When it's ready, initialise the play status
-     */
-    __startMonitoring() {
-        this.player.addListener('ready', () => {
-            this.isReady = true
-            this.setVolumeToNormal()
-            this.stop()
-            logger.info('MPD client is ready to use')
-        })
-    
-        this.player.addListener('socket-error', () => {
-            this.isReady = false
-            throw new Error('connection faild')
-        })
-        
-        this.player.addListener('socket-end', () => {
-            this.isReady = false
-            throw new Error('connection lost')
-        })
-    }
 }
