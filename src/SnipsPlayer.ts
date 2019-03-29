@@ -70,6 +70,17 @@ export class SnipsPlayer {
             throw new Error('mpdConnectionEnd')
         })
     }
+
+    /**
+     * Initialise player as soon as it's ready
+     */
+    __init() {
+        this.isReady = true
+        this.setVolumeToNormal()
+        this.stop()
+        logger.info('MPD client is ready to use')
+    }
+
     // Player controlling commands
     previous() {
         return this.player.playback.previous()
