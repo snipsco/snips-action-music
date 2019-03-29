@@ -17,7 +17,7 @@ export class SnipsPlayer {
     dialog: Dialog
     player: MPC
 
-    // MPD client setting
+    // MPD client connection info
     host: string = 'localhost'
     port: number = 6600
     
@@ -52,6 +52,24 @@ export class SnipsPlayer {
         this.player.connectTCP(this.host, this.port)
     }
 
+    /**
+     * Add event listener to the MPD. When it's ready, initialise the play status
+     */
+    __startMonitoring() {
+        this.player.addListener('ready', () => {
+            this.__init()
+        })
+    
+        this.player.addListener('socket-error', () => {
+            this.isReady = false
+            throw new Error('mpdConnectionFaild')
+        })
+        
+        this.player.addListener('socket-end', () => {
+            this.isReady = false
+            throw new Error('mpdConnectionEnd')
+        })
+    }
     // Player controlling commands
     previous() {
         return this.player.playback.previous()

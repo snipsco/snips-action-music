@@ -3,6 +3,12 @@
         "mqtt": [
             "Sorry, there was a communication error with the Snips platform"
         ],
+        "mpdConnectionFaild": [
+            "Sorry, mpd connection faild."
+        ],
+        "mpdConnectionEnd": [
+            "Sorry, mpd connection lost."
+        ],
         "config": [
             "Sorry, there was an error with your config file."
         ],
