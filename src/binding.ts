@@ -46,7 +46,7 @@ export const onIntentDetected = function (hermes: Hermes, player: SnipsPlayer) {
             action: (msg, flow) => handlers.volumeSet(msg, flow, hermes, player)
         },
         {
-            intent: `${SNIPS_PREFIX}getInfo`,
+            intent: `${SNIPS_PREFIX}getInfos`,
             action: (msg, flow) => handlers.getInfo(msg, flow, hermes, player)
         }
     ])
