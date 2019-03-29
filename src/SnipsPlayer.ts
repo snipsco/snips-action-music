@@ -107,6 +107,32 @@ export class SnipsPlayer {
     }
 
     /**
+     * Get the current playing info
+     */
+    getPlayingInfo() {
+        return this.__getStatus()
+        .then((res) => {
+            logger.debug(res)
+            if (res.state == 'stop' || res.state == 'pause') {
+                throw new Error('nothingPlaying')
+            }
+            return this.__getCurrentSong()
+        })
+    }
+
+    /**
+     * Wrapper method
+     */
+    __getStatus() {
+        return this.player.status.status()
+    }
+    /**
+     * Wrapper method
+     */
+    __getCurrentSong() {
+        return this.player.status.currentSong()
+    }
+    /**
      * Wrapper method
      * 
      * @param volume 
