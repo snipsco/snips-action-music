@@ -1,5 +1,4 @@
 import { i18nFactory } from '../factories/i18nFactory'
-import { logger } from '../utils/logger'
 
 function randomTranslation (key: string | string[], opts: {[key: string]: any}): string {
     const i18n = i18nFactory.get()

@@ -1,5 +1,5 @@
 import { IntentMessage, slotType, NluSlot } from 'hermes-javascript'
-import { message, logger } from '../utils'
+import { message } from '../utils'
 import {
     SLOT_CONFIDENCE_THRESHOLD,
     VOLUME_MINIMUM,
@@ -31,11 +31,11 @@ export const extractVolumeNumber = function(msg: IntentMessage): number {
     })
 
     if (res.volumeSetMinMax == 'minimum') {
-        return VOLUME_MINIMUM;
+        return VOLUME_MINIMUM
     }
 
     if (res.volumeSetMinMax == 'maximum') {
-        return VOLUME_MAXIMUM;
+        return VOLUME_MAXIMUM
     }
 
     if (res.volumeSetAbsolute) {

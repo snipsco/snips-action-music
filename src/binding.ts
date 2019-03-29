@@ -6,7 +6,7 @@ import {
     sessionEnded
 } from './handlers'
 
-import { SnipsPlayer } from './snipsPlayer';
+import { SnipsPlayer } from './snipsPlayer'
 
 export const onIntentDetected = function (hermes: Hermes, player: SnipsPlayer) {
     const dialog: Dialog = hermes.dialog()

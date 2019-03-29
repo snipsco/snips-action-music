@@ -1,4 +1,3 @@
-import { i18nFactory } from '../factories'
 import { Handler } from './index'
 import { logger, translation } from '../utils'
 

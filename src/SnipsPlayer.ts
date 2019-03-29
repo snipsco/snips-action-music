@@ -1,6 +1,6 @@
 import { MPC } from 'mpc-js'
 import { logger } from './utils/logger'
-import { Dialog } from 'hermes-javascript';
+import { Dialog } from 'hermes-javascript'
 
 interface SnipsPlayerInitOptions {
     host?: string

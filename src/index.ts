@@ -6,7 +6,7 @@ import {
     onIntentDetected,
     onSessionToggle
 } from './binding'
-import { SnipsPlayer } from './SnipsPlayer';
+import { SnipsPlayer } from './SnipsPlayer'
 
 // Initialize hermes
 export default function ({
