@@ -13,7 +13,7 @@ export const DEFAULT_MPD_CONNECTION = {
     host: 'localhost',
     port: 6600
 }
-export const SNIPS_PREFIX = 'dfercastrosnipsadmin:'
+export const SNIPS_PREFIX = 'snips-assistant:'
 export const INTENT_CONFIDENCE_STANDERD = 0.7
 export const INTENT_CONFIDENCE_BAD = 0.3
 export const SLOT_CONFIDENCE_THRESHOLD = 0.5

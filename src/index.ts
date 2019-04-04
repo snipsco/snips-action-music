@@ -12,7 +12,7 @@ import { SnipsPlayer } from './SnipsPlayer'
 export default function ({
     hermesOptions = {
         // debug mock
-        address: '192.168.171.148:1883'
+        address: '192.168.172.48:1883'
     },
     bootstrapOptions = {},
     snipsPlayerOptions = {
