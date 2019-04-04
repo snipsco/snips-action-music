@@ -48,6 +48,11 @@ export const onIntentDetected = function (hermes: Hermes, player: SnipsPlayer) {
         {
             intent: `${SNIPS_PREFIX}getInfos`,
             action: (msg, flow) => handlers.getInfo(msg, flow, hermes, player)
+        },
+        // Additional intent for demo
+        {
+            intent: `${SNIPS_PREFIX}InjectionControl`,
+            action: (msg, flow) => handlers.injectionControl(msg, flow, hermes, player)
         }
     ])
 }

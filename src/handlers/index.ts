@@ -10,6 +10,7 @@ import { volumeUpHandler } from './volumeUp'
 import { volumeDownHandler } from './volumeDown'
 import { volumeSetHandler } from './volumeSet'
 import { getInfoHandler } from './getInfo'
+import { injectionControlHandler } from './injectionControl'
 
 import {
     INTENT_CONFIDENCE_STANDERD,
@@ -62,7 +63,8 @@ export default {
     volumeUp: handlerWrapper(volumeUpHandler),
     volumeDown: handlerWrapper(volumeDownHandler),
     volumeSet: handlerWrapper(volumeSetHandler),
-    getInfo: handlerWrapper(getInfoHandler)
+    getInfo: handlerWrapper(getInfoHandler),
+    injectionControl: handlerWrapper(injectionControlHandler)
 }
 
 export * from './sessionEnded'
