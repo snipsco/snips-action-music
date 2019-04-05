@@ -1,7 +1,7 @@
 import { Handler } from './index'
 import { logger } from '../utils/logger'
 import { Injection } from 'hermes-javascript'
-import { message } from '../utils'
+import { message, translation } from '../utils'
 import { 
     SLOT_CONFIDENCE_THRESHOLD 
 } from '../constants'
@@ -9,7 +9,7 @@ import {
 function startInjection(hermes) {
     hermes.injection().publish('injection_request', {
         id: 'walkman_injection',
-        lexicon: { },
+        lexicon: {},
         operations: [
             [
                 Injection.enums.injectionKind.addFromVanilla,
@@ -63,9 +63,9 @@ export const injectionControlHandler: Handler = async function (msg, flow, herme
 
     if (res) {
         deleteInjection(hermes)
-        return 'Deleting Injection'
+        return translation.randomTranslation('info.deleteInjection', {})
     } else {
         startInjection(hermes)
-        return 'Starting Injection'
+        return translation.randomTranslation('info.startInjection', {})
     }
 }

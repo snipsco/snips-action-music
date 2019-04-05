@@ -68,21 +68,27 @@
             "{{ track }} by {{ artist }}."
         ],
         "playAlbum": [
-            "Playing the album {{album}}.",
-            "Playing songs from album {{album}}."
+            "Playing the album {{ album }}.",
+            "Playing songs from album {{ album }}."
         ],
         "playAlbumArtist": [
-            "Playing the album {{album}} by {{artist}}."
+            "Playing the album {{ album }} by {{ artist }}."
         ],
         "playArtist": [
-            "Playing music by {{artist}}.",
-            "Playing songs by {{artist}}.",
-            "Playing popular songs by {{artist}}."
+            "Playing music by {{ artist }}.",
+            "Playing songs by {{ artist }}.",
+            "Playing popular songs by {{ artist }}."
         ],
         "playPlaylist": [
-            "Playing {{playlist}}.",
-            "Playing {{playlist}} music.",
-            "Playing a {{playlist}} playlist."
-        ]
+            "Playing {{ playlist }}.",
+            "Playing {{ playlist }} music.",
+            "Playing a {{ playlist }} playlist."
+        ],
+        "startInjection": [
+            "Starting a new injection."
+        ],
+        "deleteInjection": [
+            "Removing the previous injection."
+        ]   
     }
 }
