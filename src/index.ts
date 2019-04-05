@@ -12,7 +12,7 @@ import { SnipsPlayer } from './SnipsPlayer'
 export default function ({
     hermesOptions = {
         // debug mock
-        address: '192.168.172.48:1883'
+        address: 'snips-assistant-demo.local:1883'
     },
     bootstrapOptions = {},
     snipsPlayerOptions = {
@@ -24,6 +24,10 @@ export default function ({
             try {
                 // Bootstrap config, locale, i18n…
                 await bootstrap(bootstrapOptions)
+
+                hermes.feedback().publish('notification_off', {
+                    siteId: 'default'
+                })
 
                 let musicPlayer = new SnipsPlayer(hermes.dialog(), snipsPlayerOptions)
 
