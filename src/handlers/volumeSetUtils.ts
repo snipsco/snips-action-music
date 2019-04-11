@@ -1,5 +1,5 @@
 import { IntentMessage, slotType, NluSlot } from 'hermes-javascript'
-import { message } from '../utils'
+import { message, camelize } from '../utils'
 import {
     SLOT_CONFIDENCE_THRESHOLD,
     VOLUME_MINIMUM,
@@ -13,20 +13,19 @@ export const checkVolumeRange = function (rawVolume: number): number {
 export const extractVolumeNumber = function(msg: IntentMessage): number {
 
     let slotNamesRaw = [
-        'volumeSetAbsolute',
-        'volumeSetPercentage',
-        'volumeSetMinMax'
+        'volume_set_absolute',
+        'volume_set_min_max'
     ]
 
     let res: any = {}
 
-    slotNamesRaw.forEach( (slotNameRaw) => {
-        let tempSlot: NluSlot<slotType.custom> | null = message.getSlotsByName(msg, slotNameRaw, {
+    slotNamesRaw.forEach( (slot_name_raw) => {
+        let tempSlot: NluSlot<slotType.custom> | null = message.getSlotsByName(msg, slot_name_raw, {
             onlyMostConfident: true,
             threshold: SLOT_CONFIDENCE_THRESHOLD
         })
         if (tempSlot) {
-            res[slotNameRaw] = tempSlot.value.value
+            res[camelize.camelize(slot_name_raw)] = tempSlot.value.value
         }
     })
 
@@ -40,10 +39,6 @@ export const extractVolumeNumber = function(msg: IntentMessage): number {
 
     if (res.volumeSetAbsolute) {
         return checkVolumeRange(res.volumeSetAbsolute)
-    }
-
-    if (res.volumeSetPercentage) {
-        return checkVolumeRange(res.volumeSetPercentage)
     }
 
     // If no value found, report an intent error
