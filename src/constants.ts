@@ -41,3 +41,42 @@ export const VOLUME_SILENCE = 20
 export const VOLUME_MINIMUM = 20
 export const VOLUME_MAXIMUM = 100
 export const VOLOME_STEP_DEFAULT = 15
+// Intents which are always enabled
+export const MODE_ALWAYS_ENABLED: string[] = [
+    'PlayMusic',
+    'PlayRandom',
+    'VolumeDown',
+    'VolumeUp',
+    'VolumeSet',
+    'InjectionControl'
+]
+// Intents which are disabled on bootup
+export const MODE_INIT_DISABLED: string[] = [
+    'GetInfos',
+    'PreviousSong',
+    'NextSong',
+    'ResumeMusic',
+    'SpeakerInterrupt'
+]
+//
+export const MODE_PLAYING_ENABLED: string[] = [
+    'GetInfos',
+    'PreviousSong',
+    'NextSong',
+    'SpeakerInterrupt'
+]
+
+export const MODE_PLAYING_DISABLED: string[] = [
+    'ResumeMusic'
+]
+
+export const MODE_PAUSING_ENABLED: string[] = [
+    'ResumeMusic'
+]
+
+export const MODE_PAUSING_DISABLED: string[] = [
+    'GetInfos',
+    'PreviousSong',
+    'NextSong',
+    'SpeakerInterrupt'
+]

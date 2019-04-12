@@ -1,7 +1,6 @@
 import { withHermes } from 'hermes-javascript'
 import bootstrap from './bootstrap'
-import { translation, logger } from './utils'
-import { SNIPS_PREFIX } from './constants'
+import { mode, translation, logger } from './utils'
 import { 
     onIntentDetected,
     onSessionToggle
@@ -31,7 +30,7 @@ export default function ({
 
                 let musicPlayer = new SnipsPlayer(hermes.dialog(), snipsPlayerOptions)
 
-                logger.debug(`${SNIPS_PREFIX}playMusic`)
+                mode.setInti(hermes.dialog())
 
                 // subscribe to intent handlers
                 onIntentDetected(hermes, musicPlayer)
