@@ -12,6 +12,7 @@ import { volumeSetHandler } from './volumeSet'
 import { getInfoHandler } from './getInfo'
 import { injectionControlHandler } from './injectionControl'
 import { playRandomHandler } from './playRandom'
+import { selfIntroductionHandler } from './selfIntroduction'
 
 import {
     INTENT_CONFIDENCE_STANDERD,
@@ -66,7 +67,8 @@ export default {
     volumeDown: handlerWrapper(volumeDownHandler),
     volumeSet: handlerWrapper(volumeSetHandler),
     getInfo: handlerWrapper(getInfoHandler),
-    injectionControl: handlerWrapper(injectionControlHandler)
+    injectionControl: handlerWrapper(injectionControlHandler),
+    selfIntroduction: handlerWrapper(selfIntroductionHandler)
 }
 
 export * from './sessionEnded'

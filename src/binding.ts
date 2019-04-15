@@ -57,7 +57,11 @@ export const onIntentDetected = function (hermes: Hermes, player: SnipsPlayer) {
         {
             intent: `${SNIPS_PREFIX}InjectionControl`,
             action: (msg, flow) => handlers.injectionControl(msg, flow, hermes, player)
-        }
+        },
+        {
+            intent: `${SNIPS_PREFIX}SelfIntroduction`,
+            action: (msg, flow) => handlers.selfIntroduction(msg, flow, hermes, player)
+        },
     ])
 }
 
