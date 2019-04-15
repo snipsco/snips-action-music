@@ -258,4 +258,28 @@ export class SnipsPlayer {
             return this.__loadSongFromSavedPlaylist(playlist)
         })
     }
+
+    /**
+     * Get all the registered songs/ playlists/ directories
+     */
+    __getAllMPDEntities() {
+        return this.player.database.listAll()
+    }
+
+    /**
+     * Get a random playlist
+     */
+    getLoadedPlaylistRandom() {
+        return this.__getAllMPDEntities()
+        .then(res => {
+            let playlists: string[] = []
+            res.forEach((entity => {
+                if (entity.match('\.m3u')) {
+                    playlists.push(entity)
+                }
+            }))
+            
+            return playlists[Math.floor((Math.random() * playlists.length))]
+        })
+    }
 }
