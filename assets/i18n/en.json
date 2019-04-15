@@ -23,9 +23,17 @@
             "I'm not sure I understood.",
             "Sorry I didn't get that."
         ],
+        "noSlotValueFound": [
+            "Sorry I don't know how to help you with that.",
+            "I don't think I can help you with that.",
+            "Sorry, I dont't think I understood.",
+            "Em, I dont't know that one."
+        ],
         "nluIntentErrorStanderd": [
             "Sorry I don't know how to help you with that.",
-            "I don't think I can help you with that."
+            "I don't think I can help you with that.",
+            "Sorry, I dont't think I understood.",
+            "Em, I dont't know that one."
         ],
         "nluIntentErrorBad": [
             "Sorry I don't think I understood.",
@@ -92,6 +100,6 @@
         ],
         "selfIntroduction": [
             "I am an off-line music assistant made by Snips. I can understand more than 10 thousand music, artist and album names. You can ask me queries just like how you ask your friend, such as 'play some Michael Jackson', 'put some jazz music' or 'I want listen some music' etc."
-        ]   
+        ]
     }
 }

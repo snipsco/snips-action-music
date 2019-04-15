@@ -12,7 +12,7 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
     let music: musicInfoRes | null = musicInfoExtractor(msg)
 
     if (!music) {
-        throw new Error('nluIntentErrorStanderd')
+        throw new Error('noSlotValueFound')
     }
 
     let scenario: string = getScenario(music)
