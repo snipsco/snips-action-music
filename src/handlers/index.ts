@@ -11,6 +11,7 @@ import { volumeDownHandler } from './volumeDown'
 import { volumeSetHandler } from './volumeSet'
 import { getInfoHandler } from './getInfo'
 import { injectionControlHandler } from './injectionControl'
+import { playRandomHandler } from './playRandom'
 
 import {
     INTENT_CONFIDENCE_STANDERD,
@@ -56,6 +57,7 @@ const handlerWrapper = (handler: Handler): Handler => (
 // Add handlers here, and wrap them.
 export default {
     playMusic: handlerWrapper(playMusicHandler),
+    playRandom: handlerWrapper(playRandomHandler),
     previousSong: handlerWrapper(previousSongHandler),
     nextSong: handlerWrapper(nextSongHandler),
     speakerInterrupt: handlerWrapper(speakerInterruptHandler),
