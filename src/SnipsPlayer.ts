@@ -134,6 +134,26 @@ export class SnipsPlayer {
     }
 
     /**
+     * Check if the player is playing 
+     */
+    isPlaying() {
+        return this.__getStatus()
+        .then((res) => {
+            return res.state == 'play' ? true : false
+        })
+    }
+
+    /**
+     * Check if the player is stoping 
+     */
+    isStoping() {
+        return this.__getStatus()
+        .then((res) => {
+            return res.state == 'stop' ? true : false
+        })
+    }
+
+    /**
      * Wrapper method
      */
     __getStatus() {
