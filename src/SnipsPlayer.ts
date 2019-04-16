@@ -37,29 +37,13 @@ export class SnipsPlayer {
     constructor(dialog: Dialog, options: SnipsPlayerInitOptions) {
         this.dialog = dialog
         this.player = new MPC()
-        if (options.host) {
-            this.host = options.host
-        }
-       
-        if (options.port) {
-            this.port = options.port
-        }
 
-        if (options.defaultVolume) {
-            this.volume = options.defaultVolume
-        }
-
-        if (options.enableRandom) {
-            this.enableRandom = options.enableRandom
-        }
-
-        if (options.volumeAutoReset) {
-            this.volumeAutoReset = options.volumeAutoReset
-        }
-
-        if (options.volumeTimeout) {
-            this.volumeTimeout = options.volumeTimeout
-        }
+        this.host = options.host || this.host
+        this.port = options.port || this.port
+        this.volume = options.defaultVolume || this.volume
+        this.enableRandom = options.enableRandom || this.enableRandom
+        this.volumeAutoReset = options.volumeAutoReset || this.volumeAutoReset
+        this.volumeTimeout = options.volumeTimeout || this.volumeTimeout
 
         this.__startMonitoring()
         this.player.connectTCP(this.host, this.port)
