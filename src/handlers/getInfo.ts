@@ -18,23 +18,21 @@ export const getInfoHandler: Handler = async function (msg, flow, hermes, player
         throw new Error('nothingPlaying')
     }
 
-    logger.debug(info)
-    logger.debug('asking: ', slotValue)
     switch (slotValue) {
         case 'track':
-            return translation.randomTranslation('info.playTrack', {
+            return translation.randomTranslation('info.reportTrack', {
                 track: info.title
             })
         case 'song':
-            return translation.randomTranslation('info.playTrack', {
+            return translation.randomTranslation('info.reportTrack', {
                 track: info.title
             })
         case 'artist':
-            return translation.randomTranslation('info.playArtist', {
+            return translation.randomTranslation('info.reportArtist', {
                 artist: info.artist
             })
         case 'album':
-            return translation.randomTranslation('info.playAlbum', {
+            return translation.randomTranslation('info.reportAlbum', {
                 album: info.album
             })
         default:

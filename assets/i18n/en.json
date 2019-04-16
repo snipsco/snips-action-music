@@ -92,6 +92,20 @@
             "Playing {{ playlist }} music.",
             "Playing a {{ playlist }} playlist."
         ],
+        "reportTrack": [
+            "{{ track }}",
+            "Playing {{ track }}."
+        ],
+        "reportArtist": [
+            "{{ artist }}",
+            "It's {{ artist }}.",
+            "Playing music by {{ artist }}."
+        ],
+        "reportAlbum": [
+            "{{ album }}",
+            "Playing the album {{ album }}.",
+            "It's {{ album }}."
+        ],
         "startInjection": [
             "Starting a new injection."
         ],
