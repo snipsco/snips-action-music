@@ -23,7 +23,6 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
         scenario === 'B' ||
         scenario === 'C'
     ) {
-        logger.debug('Scenario A - C')
         await player.createPlayListIfPossible(
             music.songName, 
             music.albumName, 

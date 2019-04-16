@@ -185,7 +185,7 @@ export class SnipsPlayer {
      * @param album 
      * @param artist 
      */
-    __checkExistance(song: string, album: string, artist: string) {
+    __checkExistance(song: string | undefined, album: string | undefined, artist: string | undefined) {
         return this.player.database.search([
             ['Title', song ? song : ''], 
             ['Album', album ? album : ''], 
@@ -199,7 +199,7 @@ export class SnipsPlayer {
      * @param album 
      * @param artist 
      */
-    __createPlayList(song: string, album: string, artist: string) {
+    __createPlayList(song: string | undefined, album: string | undefined, artist: string | undefined) {
         return this.player.database.searchAdd([
             ['Title', song ? song : ''], 
             ['Album', album ? album : ''], 
@@ -216,7 +216,7 @@ export class SnipsPlayer {
      * @param album 
      * @param artist 
      */
-    createPlayListIfPossible(song: string, album: string, artist: string) {
+    createPlayListIfPossible(song: string | undefined, album: string | undefined, artist: string | undefined) {
         return this.__checkExistance(song, album, artist)
         .then((res) => {
             if (!res.length) {
@@ -253,8 +253,11 @@ export class SnipsPlayer {
      * 
      * @param playlist 
      */
-    loadPlaylistIfPossible(playlist: string) {
-        return this.__checkExistancePlaylist(playlist)
+    loadPlaylistIfPossible(playlist: string | undefined) {
+        if (!playlist) {
+            throw new Error('no playlist provided')
+        }
+        return this.__checkExistancePlaylist(String(playlist))
         .then((res) => {
             if (!res.length) {
                 logger.debug(res)

@@ -5,7 +5,7 @@ export const previousSongHandler: Handler = async function (msg, flow, hermes, p
     logger.debug('previousSongHandler')
     flow.end()
     
-    player.previous().then(
+    player.previous().then( () => {
         logger.info('Playing the previous song')
-    )
+    })
 }

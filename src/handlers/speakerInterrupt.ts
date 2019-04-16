@@ -5,7 +5,7 @@ export const speakerInterruptHandler: Handler = async function (msg, flow, herme
     logger.debug('speakerInterruptHandler')
     flow.end()
     
-    player.pause().then(
+    player.pause().then( () => {
         logger.info('Stoping')
-    )
+    })
 }
