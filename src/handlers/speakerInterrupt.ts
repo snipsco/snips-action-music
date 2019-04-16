@@ -1,5 +1,5 @@
 import { Handler } from './index'
-import { logger } from '../utils/logger'
+import { logger } from '../utils'
 
 export const speakerInterruptHandler: Handler = async function (msg, flow, hermes, player) {
     logger.debug('speakerInterruptHandler')

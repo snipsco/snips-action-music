@@ -40,7 +40,7 @@ export default function ({
 
                 logger.debug(config)
 
-                mode.setInti(hermes.dialog())
+                //mode.setInti(hermes.dialog())
                 
                 // subscribe to intent handlers
                 const handlerOptions: HandlerOptions = {
