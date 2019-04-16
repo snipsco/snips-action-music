@@ -7,6 +7,10 @@ import {
     onSessionToggle
 } from './binding'
 import { SnipsPlayer } from './SnipsPlayer'
+import { HandlerOptions } from './handlers';
+import {
+    CONFIDENCE_DEFAULT
+} from './constants'
 
 // Initialize hermes
 export default function ({
@@ -28,7 +32,7 @@ export default function ({
                 })
 
                 const musicPlayer = new SnipsPlayer(hermes.dialog(), {
-                    host: config.mpdHost || undefined,
+                    host: String(config.mpdHost) || undefined,
                     port: Number(config.mpdPort) || undefined,
                     volumeAutoReset: Boolean(config.volumeAutoReset) || undefined,
                     volumeTimeout: Number(config.volumeTimeout) || undefined
@@ -37,9 +41,17 @@ export default function ({
                 logger.debug(config)
 
                 mode.setInti(hermes.dialog())
-
+                
                 // subscribe to intent handlers
-                onIntentDetected(hermes, musicPlayer)
+                const handlerOptions: HandlerOptions = {
+                    confidenceScore: {
+                        intentStandard: Number(config.confidenceIntentStanderd) || CONFIDENCE_DEFAULT.INTENT_STANDARD,
+                        intentDrop: Number(config.confidenceIntentDrop) || CONFIDENCE_DEFAULT.INTENT_DROP,
+                        slotDrop: Number(config.confidenceSlotDrop) || CONFIDENCE_DEFAULT.SLOT_DROP,
+                        asrDrop: Number(config.confidenceAsrDrop) || CONFIDENCE_DEFAULT.ASR
+                    }
+                }
+                onIntentDetected(hermes, musicPlayer, handlerOptions)
                 // subscribe to sessionStarted and sessionEnded
                 onSessionToggle(hermes, musicPlayer)
     

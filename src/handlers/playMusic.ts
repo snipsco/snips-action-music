@@ -6,10 +6,10 @@ import {
     getScenario
 } from './playMusicUtils'
 
-export const playMusicHandler: Handler = async function (msg, flow, hermes, player) {
+export const playMusicHandler: Handler = async function (msg, flow, hermes, player, options) {
     logger.debug('playMusicHandler')
     flow.end()
-    let music: musicInfoRes | null = musicInfoExtractor(msg)
+    let music: musicInfoRes | null = musicInfoExtractor(msg, options.confidenceScore.slotDrop)
 
     if (!music) {
         throw new Error('noSlotValueFound')

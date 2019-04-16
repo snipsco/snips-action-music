@@ -1,17 +1,14 @@
 import { Handler } from './index'
 import { logger, translation, message } from '../utils'
 import { NluSlot, slotType } from 'hermes-javascript'
-import { 
-    SLOT_CONFIDENCE_THRESHOLD 
-} from '../constants'
 
-export const getInfoHandler: Handler = async function (msg, flow, hermes, player) {
+export const getInfoHandler: Handler = async function (msg, flow, hermes, player, options) {
     logger.debug('getInfoHandler')
     flow.end()
 
     const slot: NluSlot<slotType.custom> | null = message.getSlotsByName(msg, 'music_item', {
         onlyMostConfident: true,
-        threshold: SLOT_CONFIDENCE_THRESHOLD
+        threshold: options.confidenceScore.slotDrop
     })
     const slotValue = slot ? slot.value.value : null
     

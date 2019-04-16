@@ -1,7 +1,6 @@
 import { message, logger, camelize } from '../utils'
 import { IntentMessage, slotType, NluSlot } from 'hermes-javascript'
 import {
-    SLOT_CONFIDENCE_THRESHOLD,
     SCENARIO_TABLE
 } from '../constants'
 
@@ -12,7 +11,7 @@ export interface musicInfoRes {
     artistName?: string
 }
 
-export const musicInfoExtractor = function(msg: IntentMessage): musicInfoRes | null {
+export const musicInfoExtractor = function(msg: IntentMessage, slotDropRatio: number): musicInfoRes | null {
     //logger.debug('message intent: %o', msg)
 
     let slot_names_raw = [
@@ -27,7 +26,7 @@ export const musicInfoExtractor = function(msg: IntentMessage): musicInfoRes | n
     slot_names_raw.forEach( (slot_name_raw) => {
         let tempSlot: NluSlot<slotType.custom> | null = message.getSlotsByName(msg, slot_name_raw, {
             onlyMostConfident: true,
-            threshold: SLOT_CONFIDENCE_THRESHOLD
+            threshold: slotDropRatio
         })
         if (tempSlot) {
             res[camelize.camelize(slot_name_raw)] = tempSlot.value.value
