@@ -7,6 +7,8 @@ interface SnipsPlayerInitOptions {
     port?: number
     defaultVolume?: number
     enableRandom?: boolean
+    volumeAutoReset?: boolean
+    volumeTimeout?: number
 }
 
 /**
@@ -25,6 +27,9 @@ export class SnipsPlayer {
     volume: number = 80
     volumeSilence: number = 20
     enableRandom: boolean = true
+    volumeAutoReset: boolean = false
+    volumeTimeout: number = 30
+    volumeTimeoutEntity: any = null
 
     // Player status
     isReady: boolean = false
@@ -44,8 +49,16 @@ export class SnipsPlayer {
             this.volume = options.defaultVolume
         }
 
-        if ( options.enableRandom ) {
+        if (options.enableRandom) {
             this.enableRandom = options.enableRandom
+        }
+
+        if (options.volumeAutoReset) {
+            this.volumeAutoReset = options.volumeAutoReset
+        }
+
+        if (options.volumeTimeout) {
+            this.volumeTimeout = options.volumeTimeout
         }
 
         this.__startMonitoring()
@@ -68,6 +81,22 @@ export class SnipsPlayer {
         this.player.addListener('socket-end', () => {
             this.isReady = false
             throw new Error('mpdConnectionEnd')
+        })
+
+        this.player.addListener('changed-player', () => {
+            if (!this.volumeAutoReset) {
+                return
+            }
+            this.__getStatus().then((status) => {
+                if (status.state == 'pause' || status.state == 'stop') {
+                    this.volumeTimeoutEntity = setTimeout(() => {
+                        this.saveVolume(80)
+                        logger.debug('volume has been turned back')
+                    }, this.volumeTimeout * 1000)
+                } else {
+                    clearTimeout(this.volumeTimeoutEntity)
+                }
+            })
         })
     }
 
@@ -278,7 +307,7 @@ export class SnipsPlayer {
                     playlists.push(entity)
                 }
             }))
-            
+
             return playlists[Math.floor((Math.random() * playlists.length))]
         })
     }

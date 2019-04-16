@@ -7,4 +7,6 @@ mqtt_port=1883
 mpd_host=localhost
 mqtt_port=6600
 
+volume_auto_reset=false
+volume_timeout=60
 [secret]
