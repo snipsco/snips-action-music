@@ -9,4 +9,10 @@ mqtt_port=6600
 
 volume_auto_reset=false
 volume_timeout=60
+[parameters]
+confidence_intent_standerd=0.5
+confidence_intent_drop=0.3
+confidence_slot_drop=0.5
+confidence_asr_drop=0.5
+
 [secret]
