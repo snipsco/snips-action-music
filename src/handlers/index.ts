@@ -12,6 +12,7 @@ import { volumeSetHandler } from './volumeSet'
 import { getInfoHandler } from './getInfo'
 import { injectionControlHandler } from './injectionControl'
 import { playRandomHandler } from './playRandom'
+import { setModeHandler } from './setMode'
 import { selfIntroductionHandler } from './selfIntroduction'
 import { SnipsPlayer } from '../SnipsPlayer';
 
@@ -78,6 +79,7 @@ export default {
     volumeSet: handlerWrapper(volumeSetHandler),
     getInfo: handlerWrapper(getInfoHandler),
     injectionControl: handlerWrapper(injectionControlHandler),
+    setMode: handlerWrapper(setModeHandler),
     selfIntroduction: handlerWrapper(selfIntroductionHandler)
 }
 
