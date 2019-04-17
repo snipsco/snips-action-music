@@ -119,6 +119,59 @@ export class SnipsPlayer {
         return this.player.currentPlaylist.clear()
     }
 
+    // Play mode setting
+    /**
+     * Play in random order
+     */
+    setToRandom() {
+        return this.player.playbackOptions.setRandom(true)
+        .then(() => {
+            return this.player.playbackOptions.setRepeat(false)
+        })
+        .then(() => {
+            return this.player.playbackOptions.setSingle(false)
+        })
+    }
+
+    /**
+     * Play in sequential order
+     */
+    setToSequence() {
+        return this.player.playbackOptions.setRandom(false)
+        .then(() => {
+            return this.player.playbackOptions.setRepeat(false)
+        })
+        .then(() => {
+            return this.player.playbackOptions.setSingle(false)
+        })
+    }
+
+    /**
+     * Repeat the entire list (endless mode)
+     */
+    setToRepeat() {
+        return this.player.playbackOptions.setRandom(true)
+        .then(() => {
+            return this.player.playbackOptions.setRepeat(true)
+        })
+        .then(() => {
+            return this.player.playbackOptions.setSingle(false)
+        })
+    }
+
+    /**
+     * Repeat the single song
+     */
+    setToSingle() {
+        return this.player.playbackOptions.setRandom(false)
+        .then(() => {
+            return this.player.playbackOptions.setRepeat(true)
+        })
+        .then(() => {
+            return this.player.playbackOptions.setSingle(true)
+        })
+    }
+
     /**
      * Get the current playing info
      */
