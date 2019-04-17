@@ -35,7 +35,8 @@ export default function ({
                     host: String(config.mpdHost) || undefined,
                     port: Number(config.mpdPort) || undefined,
                     volumeAutoReset: Boolean(config.volumeAutoReset) || undefined,
-                    volumeTimeout: Number(config.volumeTimeout) || undefined
+                    volumeTimeout: Number(config.volumeTimeout) || undefined,
+                    playerMode: String(config.playerModeDefault) || undefined
                 })
 
                 logger.debug(config)

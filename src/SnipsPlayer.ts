@@ -1,14 +1,22 @@
 import { MPC } from 'mpc-js'
 import { logger } from './utils/logger'
 import { Dialog } from 'hermes-javascript'
+import { deflateSync } from 'zlib';
 
 interface SnipsPlayerInitOptions {
     host?: string
     port?: number
     defaultVolume?: number
-    enableRandom?: boolean
     volumeAutoReset?: boolean
     volumeTimeout?: number
+    playerMode?: string
+}
+
+enum PlayerMode {
+    random,
+    repeat,
+    single,
+    sequence
 }
 
 /**
@@ -26,10 +34,12 @@ export class SnipsPlayer {
     // Player settings
     volume: number = 80
     volumeSilence: number = 20
-    enableRandom: boolean = true
+    
     volumeAutoReset: boolean = false
     volumeTimeout: number = 30
     volumeTimeoutEntity: any = null
+
+    playerMode: PlayerMode = PlayerMode.sequence
 
     // Player status
     isReady: boolean = false
@@ -41,10 +51,9 @@ export class SnipsPlayer {
         this.host = options.host || this.host
         this.port = options.port || this.port
         this.volume = options.defaultVolume || this.volume
-        this.enableRandom = options.enableRandom || this.enableRandom
         this.volumeAutoReset = options.volumeAutoReset || this.volumeAutoReset
         this.volumeTimeout = options.volumeTimeout || this.volumeTimeout
-
+        this.playerMode = PlayerMode[options.playerMode || 'sequence']
         this.__startMonitoring()
         this.player.connectTCP(this.host, this.port)
     }
@@ -91,6 +100,7 @@ export class SnipsPlayer {
         this.isReady = true
         this.setVolumeToNormal()
         this.stop()
+        this.setMode()
         logger.info('MPD client is ready to use')
     }
 

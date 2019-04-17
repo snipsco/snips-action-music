@@ -9,6 +9,9 @@ mqtt_port=6600
 
 volume_auto_reset=false
 volume_timeout=60
+
+player_mode_default=random
+
 [parameters]
 confidence_intent_standerd=0.5
 confidence_intent_drop=0.3
