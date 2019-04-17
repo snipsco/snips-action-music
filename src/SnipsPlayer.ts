@@ -121,9 +121,32 @@ export class SnipsPlayer {
 
     // Play mode setting
     /**
+     * Set player mode
+     * 
+     * @param mode {string}
+     */
+    setMode(mode: string | null = null) {
+        this.playerMode = PlayerMode[mode || PlayerMode[this.playerMode]]
+        logger.debug('setting player to: ', this.playerMode)
+
+        switch(this.playerMode) {
+            case PlayerMode.random:
+                return this.__setToRandom()
+            case PlayerMode.repeat:
+                return this.__setToRepeat()
+            case PlayerMode.single:
+                return this.__setToSingle()
+            case PlayerMode.sequence:
+                return this.__setToSequence()
+            default:
+                return this.__setToSequence()
+        }
+    }
+
+    /**
      * Play in random order
      */
-    setToRandom() {
+    __setToRandom() {
         return this.player.playbackOptions.setRandom(true)
         .then(() => {
             return this.player.playbackOptions.setRepeat(false)
@@ -136,7 +159,7 @@ export class SnipsPlayer {
     /**
      * Play in sequential order
      */
-    setToSequence() {
+    __setToSequence() {
         return this.player.playbackOptions.setRandom(false)
         .then(() => {
             return this.player.playbackOptions.setRepeat(false)
@@ -149,7 +172,7 @@ export class SnipsPlayer {
     /**
      * Repeat the entire list (endless mode)
      */
-    setToRepeat() {
+    __setToRepeat() {
         return this.player.playbackOptions.setRandom(true)
         .then(() => {
             return this.player.playbackOptions.setRepeat(true)
@@ -162,7 +185,7 @@ export class SnipsPlayer {
     /**
      * Repeat the single song
      */
-    setToSingle() {
+    __setToSingle() {
         return this.player.playbackOptions.setRandom(false)
         .then(() => {
             return this.player.playbackOptions.setRepeat(true)
