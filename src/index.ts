@@ -1,40 +1,58 @@
 import { withHermes } from 'hermes-javascript'
 import bootstrap from './bootstrap'
-import { translation, logger } from './utils'
-import { SNIPS_PREFIX } from './constants'
+import { mode, translation, logger } from './utils'
+import { configFactory } from './factories'
 import { 
     onIntentDetected,
     onSessionToggle
 } from './binding'
 import { SnipsPlayer } from './SnipsPlayer'
+import { HandlerOptions } from './handlers';
+import {
+    CONFIDENCE_DEFAULT
+} from './constants'
 
 // Initialize hermes
 export default function ({
     hermesOptions = {
         // debug mock
-        address: 'snips-assistant-demo.local:1883'
+        address: 'localhost:1883'
     },
-    bootstrapOptions = {},
-    snipsPlayerOptions = {
-        host: '192.168.171.148'
-    }
+    bootstrapOptions = {}
 } = {}) : Promise<() => void>{
     return new Promise((resolve, reject) => {
         withHermes(async (hermes, done) => {
             try {
                 // Bootstrap config, locale, i18n…
                 await bootstrap(bootstrapOptions)
+                const config = configFactory.get()
 
                 hermes.feedback().publish('notification_off', {
                     siteId: 'default'
                 })
 
-                let musicPlayer = new SnipsPlayer(hermes.dialog(), snipsPlayerOptions)
+                const musicPlayer = new SnipsPlayer(hermes.dialog(), {
+                    host: String(config.mpdHost) || undefined,
+                    port: Number(config.mpdPort) || undefined,
+                    volumeAutoReset: Boolean(config.volumeAutoReset) || undefined,
+                    volumeTimeout: Number(config.volumeTimeout) || undefined,
+                    playerMode: String(config.playerModeDefault) || undefined
+                })
 
-                logger.debug(`${SNIPS_PREFIX}playMusic`)
+                logger.debug(config)
 
+                //mode.setInti(hermes.dialog())
+                
                 // subscribe to intent handlers
-                onIntentDetected(hermes, musicPlayer)
+                const handlerOptions: HandlerOptions = {
+                    confidenceScore: {
+                        intentStandard: Number(config.confidenceIntentStanderd) || CONFIDENCE_DEFAULT.INTENT_STANDARD,
+                        intentDrop: Number(config.confidenceIntentDrop) || CONFIDENCE_DEFAULT.INTENT_DROP,
+                        slotDrop: Number(config.confidenceSlotDrop) || CONFIDENCE_DEFAULT.SLOT_DROP,
+                        asrDrop: Number(config.confidenceAsrDrop) || CONFIDENCE_DEFAULT.ASR
+                    }
+                }
+                onIntentDetected(hermes, musicPlayer, handlerOptions)
                 // subscribe to sessionStarted and sessionEnded
                 onSessionToggle(hermes, musicPlayer)
     

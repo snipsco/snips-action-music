@@ -1,12 +1,22 @@
 import { MPC } from 'mpc-js'
 import { logger } from './utils/logger'
 import { Dialog } from 'hermes-javascript'
+import { deflateSync } from 'zlib';
 
 interface SnipsPlayerInitOptions {
     host?: string
     port?: number
     defaultVolume?: number
-    enableRandom?: boolean
+    volumeAutoReset?: boolean
+    volumeTimeout?: number
+    playerMode?: string
+}
+
+enum PlayerMode {
+    random,
+    repeat,
+    single,
+    sequence
 }
 
 /**
@@ -24,7 +34,12 @@ export class SnipsPlayer {
     // Player settings
     volume: number = 80
     volumeSilence: number = 20
-    enableRandom: boolean = true
+    
+    volumeAutoReset: boolean = false
+    volumeTimeout: number = 30
+    volumeTimeoutEntity: any = null
+
+    playerMode: PlayerMode = PlayerMode.sequence
 
     // Player status
     isReady: boolean = false
@@ -32,22 +47,13 @@ export class SnipsPlayer {
     constructor(dialog: Dialog, options: SnipsPlayerInitOptions) {
         this.dialog = dialog
         this.player = new MPC()
-        if (options.host) {
-            this.host = options.host
-        }
-       
-        if (options.port) {
-            this.port = options.port
-        }
 
-        if (options.defaultVolume) {
-            this.volume = options.defaultVolume
-        }
-
-        if ( options.enableRandom ) {
-            this.enableRandom = options.enableRandom
-        }
-
+        this.host = options.host || this.host
+        this.port = options.port || this.port
+        this.volume = options.defaultVolume || this.volume
+        this.volumeAutoReset = options.volumeAutoReset || this.volumeAutoReset
+        this.volumeTimeout = options.volumeTimeout || this.volumeTimeout
+        this.playerMode = PlayerMode[options.playerMode || 'sequence']
         this.__startMonitoring()
         this.player.connectTCP(this.host, this.port)
     }
@@ -69,6 +75,22 @@ export class SnipsPlayer {
             this.isReady = false
             throw new Error('mpdConnectionEnd')
         })
+
+        this.player.addListener('changed-player', () => {
+            if (!this.volumeAutoReset) {
+                return
+            }
+            this.__getStatus().then((status) => {
+                if (status.state == 'pause' || status.state == 'stop') {
+                    this.volumeTimeoutEntity = setTimeout(() => {
+                        this.saveVolume(80)
+                        logger.debug('volume has been turned back')
+                    }, this.volumeTimeout * 1000)
+                } else {
+                    clearTimeout(this.volumeTimeoutEntity)
+                }
+            })
+        })
     }
 
     /**
@@ -78,6 +100,7 @@ export class SnipsPlayer {
         this.isReady = true
         this.setVolumeToNormal()
         this.stop()
+        this.setMode()
         logger.info('MPD client is ready to use')
     }
 
@@ -106,6 +129,82 @@ export class SnipsPlayer {
         return this.player.currentPlaylist.clear()
     }
 
+    // Play mode setting
+    /**
+     * Set player mode
+     * 
+     * @param mode {string}
+     */
+    setMode(mode: string | null = null) {
+        this.playerMode = PlayerMode[mode || PlayerMode[this.playerMode]]
+        logger.debug('setting player to: ', this.playerMode)
+
+        switch(this.playerMode) {
+            case PlayerMode.random:
+                return this.__setToRandom()
+            case PlayerMode.repeat:
+                return this.__setToRepeat()
+            case PlayerMode.single:
+                return this.__setToSingle()
+            case PlayerMode.sequence:
+                return this.__setToSequence()
+            default:
+                return this.__setToSequence()
+        }
+    }
+
+    /**
+     * Play in random order
+     */
+    __setToRandom() {
+        return this.player.playbackOptions.setRandom(true)
+        .then(() => {
+            return this.player.playbackOptions.setRepeat(false)
+        })
+        .then(() => {
+            return this.player.playbackOptions.setSingle(false)
+        })
+    }
+
+    /**
+     * Play in sequential order
+     */
+    __setToSequence() {
+        return this.player.playbackOptions.setRandom(false)
+        .then(() => {
+            return this.player.playbackOptions.setRepeat(false)
+        })
+        .then(() => {
+            return this.player.playbackOptions.setSingle(false)
+        })
+    }
+
+    /**
+     * Repeat the entire list (endless mode)
+     */
+    __setToRepeat() {
+        return this.player.playbackOptions.setRandom(true)
+        .then(() => {
+            return this.player.playbackOptions.setRepeat(true)
+        })
+        .then(() => {
+            return this.player.playbackOptions.setSingle(false)
+        })
+    }
+
+    /**
+     * Repeat the single song
+     */
+    __setToSingle() {
+        return this.player.playbackOptions.setRandom(false)
+        .then(() => {
+            return this.player.playbackOptions.setRepeat(true)
+        })
+        .then(() => {
+            return this.player.playbackOptions.setSingle(true)
+        })
+    }
+
     /**
      * Get the current playing info
      */
@@ -117,6 +216,26 @@ export class SnipsPlayer {
                 throw new Error('nothingPlaying')
             }
             return this.__getCurrentSong()
+        })
+    }
+
+    /**
+     * Check if the player is playing 
+     */
+    isPlaying() {
+        return this.__getStatus()
+        .then((res) => {
+            return res.state == 'play' ? true : false
+        })
+    }
+
+    /**
+     * Check if the player is stoping 
+     */
+    isStoping() {
+        return this.__getStatus()
+        .then((res) => {
+            return res.state == 'stop' ? true : false
         })
     }
 
@@ -172,7 +291,7 @@ export class SnipsPlayer {
      * @param album 
      * @param artist 
      */
-    __checkExistance(song: string, album: string, artist: string) {
+    __checkExistance(song: string | undefined, album: string | undefined, artist: string | undefined) {
         return this.player.database.search([
             ['Title', song ? song : ''], 
             ['Album', album ? album : ''], 
@@ -186,7 +305,7 @@ export class SnipsPlayer {
      * @param album 
      * @param artist 
      */
-    __createPlayList(song: string, album: string, artist: string) {
+    __createPlayList(song: string | undefined, album: string | undefined, artist: string | undefined) {
         return this.player.database.searchAdd([
             ['Title', song ? song : ''], 
             ['Album', album ? album : ''], 
@@ -203,7 +322,7 @@ export class SnipsPlayer {
      * @param album 
      * @param artist 
      */
-    createPlayListIfPossible(song: string, album: string, artist: string) {
+    createPlayListIfPossible(song: string | undefined, album: string | undefined, artist: string | undefined) {
         return this.__checkExistance(song, album, artist)
         .then((res) => {
             if (!res.length) {
@@ -240,8 +359,11 @@ export class SnipsPlayer {
      * 
      * @param playlist 
      */
-    loadPlaylistIfPossible(playlist: string) {
-        return this.__checkExistancePlaylist(playlist)
+    loadPlaylistIfPossible(playlist: string | undefined) {
+        if (!playlist) {
+            throw new Error('no playlist provided')
+        }
+        return this.__checkExistancePlaylist(String(playlist))
         .then((res) => {
             if (!res.length) {
                 logger.debug(res)
@@ -256,6 +378,30 @@ export class SnipsPlayer {
         })
         .then(() => {
             return this.__loadSongFromSavedPlaylist(playlist)
+        })
+    }
+
+    /**
+     * Get all the registered songs/ playlists/ directories
+     */
+    __getAllMPDEntities() {
+        return this.player.database.listAll()
+    }
+
+    /**
+     * Get a random playlist
+     */
+    getLoadedPlaylistRandom() {
+        return this.__getAllMPDEntities()
+        .then(res => {
+            let playlists: string[] = []
+            res.forEach((entity => {
+                if (entity.match('\.m3u')) {
+                    playlists.push(entity)
+                }
+            }))
+
+            return playlists[Math.floor((Math.random() * playlists.length))]
         })
     }
 }

@@ -5,7 +5,12 @@ export const nextSongHandler: Handler = async function (msg, flow, hermes, playe
     logger.debug('nextSongHandler')
     flow.end()
     
-    player.next().then(
+    const state = await player.isPlaying()
+    if (!state) {
+        throw new Error('nothingPlaying')
+    }
+
+    player.next().then( () => {
         logger.info('Playing the next song')
-    )
+    })
 }

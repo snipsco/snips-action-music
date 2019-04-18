@@ -6,13 +6,13 @@ import {
     getScenario
 } from './playMusicUtils'
 
-export const playMusicHandler: Handler = async function (msg, flow, hermes, player) {
+export const playMusicHandler: Handler = async function (msg, flow, hermes, player, options) {
     logger.debug('playMusicHandler')
     flow.end()
-    let music: musicInfoRes | null = musicInfoExtractor(msg)
+    let music: musicInfoRes | null = musicInfoExtractor(msg, options.confidenceScore.slotDrop)
 
     if (!music) {
-        throw new Error('nluIntentErrorStanderd')
+        throw new Error('noSlotValueFound')
     }
 
     let scenario: string = getScenario(music)
@@ -23,7 +23,6 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
         scenario === 'B' ||
         scenario === 'C'
     ) {
-        logger.debug('Scenario A - C')
         await player.createPlayListIfPossible(
             music.songName, 
             music.albumName, 
