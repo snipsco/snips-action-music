@@ -1,7 +1,6 @@
 import { MPC } from 'mpc-js'
 import { logger } from './utils/logger'
 import { Dialog } from 'hermes-javascript'
-import { deflateSync } from 'zlib';
 
 interface SnipsPlayerInitOptions {
     host?: string
@@ -10,6 +9,7 @@ interface SnipsPlayerInitOptions {
     volumeAutoReset?: boolean
     volumeTimeout?: number
     playerMode?: string
+    volumeSilence?: number
 }
 
 enum PlayerMode {
@@ -28,18 +28,20 @@ export class SnipsPlayer {
     player: MPC
 
     // MPD client connection info
-    host: string = 'localhost'
-    port: number = 6600
+    host: string
+    port: number
     
     // Player settings
-    volume: number = 80
-    volumeSilence: number = 20
+    volume: number
+    volumeSilence: number
     
-    volumeAutoReset: boolean = false
-    volumeTimeout: number = 30
+    // Volume auto-rest
+    volumeAutoReset: boolean
+    volumeTimeout: number
     volumeTimeoutEntity: any = null
 
-    playerMode: PlayerMode = PlayerMode.sequence
+    // Default mode
+    playerMode: PlayerMode
 
     // Player status
     isReady: boolean = false
@@ -48,12 +50,13 @@ export class SnipsPlayer {
         this.dialog = dialog
         this.player = new MPC()
 
-        this.host = options.host || this.host
-        this.port = options.port || this.port
-        this.volume = options.defaultVolume || this.volume
-        this.volumeAutoReset = options.volumeAutoReset || this.volumeAutoReset
-        this.volumeTimeout = options.volumeTimeout || this.volumeTimeout
-        this.playerMode = PlayerMode[options.playerMode || 'sequence']
+        this.host = options.host || 'localhost'
+        this.port = options.port || 6600
+        this.volume = options.defaultVolume || 80
+        this.volumeSilence = options.volumeSilence || 20
+        this.volumeAutoReset = options.volumeAutoReset || false
+        this.volumeTimeout = options.volumeTimeout || 30
+        this.playerMode = options.playerMode ? PlayerMode[options.playerMode] : PlayerMode.sequence
         this.__startMonitoring()
     }
 
