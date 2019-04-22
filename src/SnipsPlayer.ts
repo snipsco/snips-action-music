@@ -55,7 +55,23 @@ export class SnipsPlayer {
         this.volumeTimeout = options.volumeTimeout || this.volumeTimeout
         this.playerMode = PlayerMode[options.playerMode || 'sequence']
         this.__startMonitoring()
-        this.player.connectTCP(this.host, this.port)
+    }
+
+    /**
+     * Retrying for setting up connection
+     * 
+     * @param reconnectTimes 
+     */
+    async connect(reconnectTimes: number) {
+        let reconnect = 0
+        do {
+            await this.player.connectTCP(this.host, this.port)
+            if (reconnect < reconnectTimes) {
+                reconnect += 1
+            } else {
+                throw new Error('mpcConnectionError')
+            }
+        } while (!this.isReady)
     }
 
     /**
