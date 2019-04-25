@@ -14,6 +14,9 @@ export const DEFAULT_MPD_CONNECTION = {
     port: 6600
 }
 
+export const SNIPS_PREFIX = 'snips-assistant:'
+//export const SNIPS_PREFIX = 'coorfang:'
+
 export const CONFIDENCE_DEFAULT = {
     INTENT_STANDARD: 0.5,
     INTENT_DROP: 0.3,

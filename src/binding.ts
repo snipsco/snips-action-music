@@ -17,7 +17,7 @@ export const onIntentDetected = function (hermes: Hermes, player: SnipsPlayer, o
             action: (msg, flow) => handlers.playMusic(msg, flow, hermes, player, options)
         },
         {
-            intent: `${SNIPS_PREFIX}PlayRandom`, 
+            intent: `${SNIPS_PREFIX}PlayWhatever`, 
             action: (msg, flow) => handlers.playRandom(msg, flow, hermes, player, options)
         },
         // Music controlling intent

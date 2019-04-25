@@ -39,6 +39,9 @@ export default function ({
                     playerMode: String(config.playerModeDefault) || undefined
                 })
 
+                // connect to mpd server, retry for 3 times in case it's booting
+                await musicPlayer.connect(3)
+
                 logger.debug(config)
 
                 //mode.setInti(hermes.dialog())
