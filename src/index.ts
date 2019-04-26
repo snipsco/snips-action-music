@@ -31,12 +31,25 @@ export default function ({
                     siteId: 'default'
                 })
 
+                const say: any = (text: string, siteId?: string) => {
+                    hermes.dialog().publish('start_session', {
+                        init: {
+                            type: Dialog.enums.initType.notification,
+                            text
+                        },
+                        siteId
+                    })
+                }
+
                 const musicPlayer = new SnipsPlayer(hermes.dialog(), {
                     host: String(config.mpdHost) || undefined,
                     port: Number(config.mpdPort) || undefined,
                     volumeAutoReset: Boolean(config.volumeAutoReset) || undefined,
                     volumeTimeout: Number(config.volumeTimeout) || undefined,
-                    playerMode: String(config.playerModeDefault) || undefined
+                    playerMode: String(config.playerModeDefault) || undefined,
+                    onReady: () => say('Hello there! I\'m an Offline Music Assistant pwered by Snips Flow.'),
+                    onDisconnect: () => say(translation.randomTranslation('error.mpdConnectionEnd', {})),
+                    onConnectionFaild: () => say(translation.randomTranslation('error.mpdConnectionFaild', {}))
                 })
 
                 // connect to mpd server, retry for 3 times in case it's booting

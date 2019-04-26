@@ -46,6 +46,15 @@ export class SnipsPlayer {
     // Player status
     isReady: boolean = false
 
+    // On ready callback
+    onReady: any = null
+
+    // On disconnect callback
+    onDisconnect: any = null
+
+    // On connection faild callback
+    onConnectionFaild: any = null
+
     constructor(dialog: Dialog, options: SnipsPlayerInitOptions) {
         this.dialog = dialog
         this.player = new MPC()
@@ -57,6 +66,9 @@ export class SnipsPlayer {
         this.volumeAutoReset = options.volumeAutoReset || false
         this.volumeTimeout = options.volumeTimeout || 30
         this.playerMode = options.playerMode ? PlayerMode[options.playerMode] : PlayerMode.sequence
+        this.onReady = options.onReady || null
+        this.onDisconnect = options.onDisconnect || null
+        this.onConnectionFaild = options.onConnectionFaild || null
         this.__startMonitoring()
     }
 
@@ -71,6 +83,7 @@ export class SnipsPlayer {
             await this.player.connectTCP(this.host, this.port)
             if (reconnect < reconnectTimes) {
                 reconnect += 1
+                this.onConnectionFaild()
             } else {
                 throw new Error('mpcConnectionError')
             }
@@ -83,15 +96,18 @@ export class SnipsPlayer {
     __startMonitoring() {
         this.player.addListener('ready', () => {
             this.__init()
+            this.onReady()
         })
     
         this.player.addListener('socket-error', () => {
             this.isReady = false
+            this.onConnectionFaild()
             throw new Error('mpdConnectionFaild')
         })
         
         this.player.addListener('socket-end', () => {
             this.isReady = false
+            this.onDisconnect()
             throw new Error('mpdConnectionEnd')
         })
 
