@@ -89,8 +89,8 @@ export class SnipsPlayer {
 
             if (reconnect < reconnectTimes) {
                 reconnect += 1
-                this.onConnectionFaild()
             } else {
+                this.onConnectionFaild()
                 throw new Error('mpcConnectionError')
             }
         } while (!this.isReady)
