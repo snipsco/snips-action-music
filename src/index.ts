@@ -47,7 +47,7 @@ export default function ({
                     volumeAutoReset: Boolean(config.volumeAutoReset) || undefined,
                     volumeTimeout: Number(config.volumeTimeout) || undefined,
                     playerMode: String(config.playerModeDefault) || undefined,
-                    onReady: () => say('Hello there! I\'m an Offline Music Assistant pwered by Snips Flow.'),
+                    onReady: () => say('Hello there! I\'m an Offline Music Assistant powered by Snips Flow.'),
                     onDisconnect: () => say(translation.randomTranslation('error.mpdConnectionEnd', {})),
                     onConnectionFaild: () => say(translation.randomTranslation('error.mpdConnectionFaild', {}))
                 })
