@@ -1,4 +1,4 @@
-import { withHermes } from 'hermes-javascript'
+import { withHermes, Dialog } from 'hermes-javascript'
 import bootstrap from './bootstrap'
 import { mode, translation, logger } from './utils'
 import { configFactory } from './factories'
@@ -16,7 +16,7 @@ import {
 export default function ({
     hermesOptions = {
         // debug mock
-        address: 'localhost:1883'
+        address: 'snips-assistant-demo.local:1883'
     },
     bootstrapOptions = {}
 } = {}) : Promise<() => void>{
@@ -53,7 +53,7 @@ export default function ({
                 })
 
                 // connect to mpd server, retry for 3 times in case it's booting
-                await musicPlayer.connect(3)
+                await musicPlayer.connect(3, 30)
 
                 logger.debug(config)
 

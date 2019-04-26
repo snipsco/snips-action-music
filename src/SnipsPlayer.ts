@@ -10,6 +10,9 @@ interface SnipsPlayerInitOptions {
     volumeTimeout?: number
     playerMode?: string
     volumeSilence?: number
+    onReady?: any
+    onDisconnect?: any
+    onConnectionFaild?: any
 }
 
 enum PlayerMode {
@@ -77,10 +80,13 @@ export class SnipsPlayer {
      * 
      * @param reconnectTimes 
      */
-    async connect(reconnectTimes: number) {
+    async connect(reconnectTimes: number, gapSeconds: number) {
         let reconnect = 0
         do {
             await this.player.connectTCP(this.host, this.port)
+
+            await new Promise(resolve => setTimeout(resolve, gapSeconds * 1000))
+
             if (reconnect < reconnectTimes) {
                 reconnect += 1
                 this.onConnectionFaild()
