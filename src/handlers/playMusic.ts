@@ -5,17 +5,29 @@ import {
     musicInfoRes,
     getScenario
 } from './playMusicUtils'
+import { playRandomHandler } from './playRandom'
 
 export const playMusicHandler: Handler = async function (msg, flow, hermes, player, options) {
     logger.debug('playMusicHandler')
     flow.end()
-    let music: musicInfoRes | null = musicInfoExtractor(msg, options.confidenceScore.slotDrop)
+    const music: musicInfoRes | null = musicInfoExtractor(msg, options.confidenceScore.slotDrop)
 
     if (!music) {
-        throw new Error('noSlotValueFound')
+        if (msg.intent.confidenceScore >= 0.7) {
+            // No slot detected, but hight confidence score, then play random
+            return playRandomHandler(msg, flow, hermes, player, options)
+        } else {
+            // No slot detected, but low confidence score, then error
+            throw new Error('noSlotValueFound')
+        } 
     }
 
-    let scenario: string = getScenario(music)
+    if (!music.songName && !music.albumName && music.playlistName == 'something') {
+        // Only playlist name with something detected, play random
+        return playRandomHandler(msg, flow, hermes, player, options)
+    }
+
+    const scenario: string = getScenario(music)
 
     // Play by condition composed of song?, artist?, album? (list)
     if (
