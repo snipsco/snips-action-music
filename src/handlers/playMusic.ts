@@ -22,7 +22,7 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
         } 
     }
 
-    if (!music.songName && !music.albumName && music.playlistName == 'something') {
+    if (!music.songName && !music.albumName && !music.artistName && music.playlistName == 'something') {
         // Only playlist name with something detected, play random
         return playRandomHandler(msg, flow, hermes, player, options)
     }
