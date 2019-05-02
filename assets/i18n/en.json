@@ -62,6 +62,9 @@
         ]
     },
     "info": {
+        "ready": [
+            "Hello there! I'm an offline music assistant powered by Snips Flow."
+        ],
         "resumePlay": [
             "Resuming music from local library."
         ],
