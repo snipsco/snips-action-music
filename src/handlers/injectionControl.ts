@@ -60,9 +60,9 @@ export const injectionControlHandler: Handler = async function (msg, flow, herme
 
     if (res) {
         deleteInjection(hermes)
-        return translation.randomTranslation('info.deleteInjection', {})
+        return translation.random('info.deleteInjection', {})
     } else {
         startInjection(hermes)
-        return translation.randomTranslation('info.startInjection', {})
+        return translation.random('info.startInjection', {})
     }
 }

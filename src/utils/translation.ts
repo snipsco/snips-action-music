@@ -1,6 +1,6 @@
 import { i18nFactory } from '../factories/i18nFactory'
 
-function randomTranslation (key: string | string[], opts: {[key: string]: any}): string {
+function random (key: string | string[], opts: {[key: string]: any} = {}): string {
     const i18n = i18nFactory.get()
     const possibleValues = i18n(key, { returnObjects: true, ...opts })
     if(typeof possibleValues === 'string')
@@ -11,7 +11,7 @@ function randomTranslation (key: string | string[], opts: {[key: string]: any}):
 
 export const translation = {
     // Takes an array from the i18n and returns a random item.
-    randomTranslation,
+    random,
     // Outputs an error message based on the error object, or a default message if not found.
     errorMessage: async (error: Error): Promise<string> => {
         let i18n = i18nFactory.get()
@@ -22,7 +22,7 @@ export const translation = {
         }
 
         if(i18n) {
-            return randomTranslation(`error.${error.message}`, {})
+            return random(`error.${error.message}`, {})
         } else {
             return 'Oops, something went wrong.'
         }

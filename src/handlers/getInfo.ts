@@ -20,23 +20,23 @@ export const getInfoHandler: Handler = async function (msg, flow, hermes, player
 
     switch (slotValue) {
         case 'track':
-            return translation.randomTranslation('info.reportTrack', {
+            return translation.random('info.reportTrack', {
                 track: info.title
             })
         case 'song':
-            return translation.randomTranslation('info.reportTrack', {
+            return translation.random('info.reportTrack', {
                 track: info.title
             })
         case 'artist':
-            return translation.randomTranslation('info.reportArtist', {
+            return translation.random('info.reportArtist', {
                 artist: info.artist
             })
         case 'album':
-            return translation.randomTranslation('info.reportAlbum', {
+            return translation.random('info.reportAlbum', {
                 album: info.album
             })
         default:
-            return translation.randomTranslation('info.playTrackArtist', {
+            return translation.random('info.playTrackArtist', {
                 track: info.title,
                 artist: info.artist
             })

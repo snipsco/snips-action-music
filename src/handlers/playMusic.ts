@@ -52,25 +52,25 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
 
     switch (scenario) {
         case 'A':
-            return music.artistName ? translation.randomTranslation('info.playTrackArtist' ,{
+            return music.artistName ? translation.random('info.playTrackArtist' ,{
                 track: music.songName,
                 artist: music.artistName
-            }): translation.randomTranslation('info.playTrack', {
+            }): translation.random('info.playTrack', {
                 track: music.songName
             })
         case 'B':
-            return music.albumName ? translation.randomTranslation('info.playAlbumArtist', {
+            return music.albumName ? translation.random('info.playAlbumArtist', {
                 album: music.albumName,
                 artist: music.artistName
-            }) : translation.randomTranslation('info.playAlbum', {
+            }) : translation.random('info.playAlbum', {
                 album: music.albumName
             })
         case 'C':
-            return translation.randomTranslation('info.playArtist', {
+            return translation.random('info.playArtist', {
                 artist: music.artistName
             })
         case 'D': 
-            return translation.randomTranslation('info.playPlaylist', {
+            return translation.random('info.playPlaylist', {
                 playlist: music.playlistName
             })
     }
