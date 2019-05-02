@@ -84,7 +84,9 @@ export class SnipsPlayer {
         let reconnect = 0
         do {
             await this.player.connectTCP(this.host, this.port)
-
+            if (this.isReady) {
+                return
+            }
             await new Promise(resolve => setTimeout(resolve, gapSeconds * 1000))
 
             if (reconnect < reconnectTimes) {
