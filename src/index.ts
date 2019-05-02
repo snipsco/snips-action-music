@@ -50,9 +50,9 @@ export default function ({
                     onReady: () => say(translation.random('info.ready')),
                     onDisconnect: () => say(translation.random('error.mpdConnectionEnd')),
                     onConnectionFaild: () => say(translation.random('error.mpdConnectionFaild')),
-                    onPlaying: () => Boolean(config.contextControl) ? mode.setPlaying(hermes.dialog()) : null,
-                    onPausing: () => Boolean(config.contextControl) ? mode.setPausing(hermes.dialog()) : null,
-                    onStopping: () => Boolean(config.contextControl) ? mode.setInti(hermes.dialog()) : null
+                    onPlaying: (dialog: Dialog) => Boolean(config.contextControl) ? mode.setPlaying(dialog) : {},
+                    onPausing: (dialog: Dialog) => Boolean(config.contextControl) ? mode.setPausing(dialog) : {},
+                    onStopping: (dialog: Dialog) => Boolean(config.contextControl) ? mode.setInit(dialog) : {}
                 })
 
                 // connect to mpd server, retry for 3 times in case it's booting

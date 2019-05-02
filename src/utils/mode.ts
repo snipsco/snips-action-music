@@ -65,7 +65,7 @@ export const mode = {
             intents: intentList
         })
     },
-    setInti(dialog: Dialog) {
+    setInit(dialog: Dialog) {
         const intentList = getIntentList([], MODE_INIT_DISABLED)
         dialog.publish('configure', {
             siteId: 'default',

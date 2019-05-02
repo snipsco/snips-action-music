@@ -143,15 +143,15 @@ export class SnipsPlayer {
                 }
 
                 if (status.state == 'play') {
-                    this.onPlaying()
+                    this.onPlaying(this.dialog)
                 }
 
                 if (status.state == 'pause') {
-                    this.onPausing()
+                    this.onPausing(this.dialog)
                 }
 
                 if (status.state == 'stop') {
-                    this.onStopping()
+                    this.onStopping(this.dialog)
                 }
             })
         })
