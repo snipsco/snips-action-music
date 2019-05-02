@@ -70,7 +70,9 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
         }
     }
 
-    await player.play()
+    if (!notFoundFlag) {
+        await player.play()
+    }
 
     switch (scenario) {
         case 'A':
