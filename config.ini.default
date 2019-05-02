@@ -7,12 +7,18 @@ mqtt_port=1883
 mpd_host=localhost
 mqtt_port=6600
 
+# Reset volume after a certain time after it's stopped
 volume_auto_reset=false
 volume_timeout=60
 
+# Default order of playing
 player_mode_default=random
 
+# Activating and de-activating intents on the fly
+context_control=true
+
 [parameters]
+# Confidence score for intents, asr and slots
 confidence_intent_standerd=0.5
 confidence_intent_drop=0.3
 confidence_slot_drop=0.5

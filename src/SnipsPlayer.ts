@@ -1,6 +1,7 @@
 import { MPC } from 'mpc-js'
 import { logger } from './utils/logger'
 import { Dialog } from 'hermes-javascript'
+import { isObject } from 'util';
 
 interface SnipsPlayerInitOptions {
     host?: string
@@ -130,7 +131,6 @@ export class SnipsPlayer {
         })
 
         this.player.addListener('changed-player', () => {
-            
             this.__getStatus().then((status) => {
                 // Volume resetting
                 if (this.volumeAutoReset && (status.state == 'pause' || status.state == 'stop')) {

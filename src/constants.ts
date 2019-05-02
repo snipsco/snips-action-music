@@ -47,6 +47,20 @@ export const VOLUME_SILENCE = 20
 export const VOLUME_MINIMUM = 20
 export const VOLUME_MAXIMUM = 100
 export const VOLOME_STEP_DEFAULT = 15
+export const INTENTS: string[] = [
+    'PlayMusic',
+    'VolumeDown',
+    'VolumeUp',
+    'VolumeSet',
+    'SelfIntroduction',
+    'StartInjection',
+    'RevertInjection',
+    'GetInfos',
+    'PreviousSong',
+    'NextSong',
+    'ResumeMusic',
+    'SpeakerInterrupt'
+]
 // Intents which are always enabled
 export const MODE_ALWAYS_ENABLED: string[] = [
     'PlayMusic',

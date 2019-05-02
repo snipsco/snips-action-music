@@ -7,7 +7,8 @@ import {
     MODE_PLAYING_DISABLED,
     MODE_PAUSING_ENABLED,
     MODE_PAUSING_DISABLED,
-    MODE_ALWAYS_DISABLED
+    MODE_ALWAYS_DISABLED,
+    INTENTS
 } from '../constants'
 
 interface intentConfiguration {
@@ -51,6 +52,19 @@ function getIntentList(enabledIntent: string[], disabledIntent: string[]): inten
 }
 
 export const mode = {
+    setAllEnabled(dialog: Dialog) {
+        const intentList = new Array()
+        INTENTS.forEach(intent => {
+            intentList.push({
+                intentId: `${SNIPS_PREFIX}${intent}`,
+                enable: true
+            })
+        })
+        dialog.publish('configure', {
+            siteId: 'default',
+            intents: intentList
+        })
+    },
     setInti(dialog: Dialog) {
         const intentList = getIntentList([], MODE_INIT_DISABLED)
         dialog.publish('configure', {

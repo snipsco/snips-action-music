@@ -50,15 +50,17 @@ export default function ({
                     onReady: () => say(translation.random('info.ready')),
                     onDisconnect: () => say(translation.random('error.mpdConnectionEnd')),
                     onConnectionFaild: () => say(translation.random('error.mpdConnectionFaild')),
-                    onPlaying: () => mode.setPlaying(hermes.dialog()),
-                    onPausing: () => mode.setPausing(hermes.dialog()),
-                    onStopping: () => mode.setInti(hermes.dialog())
+                    onPlaying: () => Boolean(config.contextControl) ? mode.setPlaying(hermes.dialog()) : null,
+                    onPausing: () => Boolean(config.contextControl) ? mode.setPausing(hermes.dialog()) : null,
+                    onStopping: () => Boolean(config.contextControl) ? mode.setInti(hermes.dialog()) : null
                 })
 
                 // connect to mpd server, retry for 3 times in case it's booting
                 await musicPlayer.connect(3, 30)
 
-                //mode.setInti(hermes.dialog())
+                if (!config.contextControl) {
+                    mode.setAllEnabled(hermes.dialog())
+                }
                 
                 // subscribe to intent handlers
                 const handlerOptions: HandlerOptions = {
