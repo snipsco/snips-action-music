@@ -49,13 +49,14 @@ export default function ({
                     playerMode: String(config.playerModeDefault) || undefined,
                     onReady: () => say(translation.random('info.ready')),
                     onDisconnect: () => say(translation.random('error.mpdConnectionEnd')),
-                    onConnectionFaild: () => say(translation.random('error.mpdConnectionFaild'))
+                    onConnectionFaild: () => say(translation.random('error.mpdConnectionFaild')),
+                    onPlaying: () => mode.setPlaying(hermes.dialog()),
+                    onPausing: () => mode.setPausing(hermes.dialog()),
+                    onStopping: () => mode.setInti(hermes.dialog())
                 })
 
                 // connect to mpd server, retry for 3 times in case it's booting
                 await musicPlayer.connect(3, 30)
-
-                logger.debug(config)
 
                 //mode.setInti(hermes.dialog())
                 
@@ -68,6 +69,10 @@ export default function ({
                         asrDrop: Number(config.confidenceAsrDrop) || CONFIDENCE_DEFAULT.ASR
                     }
                 }
+
+                logger.debug(config)
+                logger.debug(handlerOptions.confidenceScore)
+
                 onIntentDetected(hermes, musicPlayer, handlerOptions)
                 // subscribe to sessionStarted and sessionEnded
                 onSessionToggle(hermes, musicPlayer)

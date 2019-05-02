@@ -13,6 +13,9 @@ interface SnipsPlayerInitOptions {
     onReady?: any
     onDisconnect?: any
     onConnectionFaild?: any
+    onPlaying?: any
+    onPausing?: any
+    onStopping?: any
 }
 
 enum PlayerMode {
@@ -58,6 +61,10 @@ export class SnipsPlayer {
     // On connection faild callback
     onConnectionFaild: any = null
 
+    onPlaying: any = null
+    onPausing: any = null
+    onStopping: any = null
+
     constructor(dialog: Dialog, options: SnipsPlayerInitOptions) {
         this.dialog = dialog
         this.player = new MPC()
@@ -72,6 +79,9 @@ export class SnipsPlayer {
         this.onReady = options.onReady || null
         this.onDisconnect = options.onDisconnect || null
         this.onConnectionFaild = options.onConnectionFaild || null
+        this.onPlaying = options.onPlaying || null
+        this.onPausing = options.onPausing || null
+        this.onStopping = options.onStopping || null
         this.__startMonitoring()
     }
 
@@ -120,17 +130,28 @@ export class SnipsPlayer {
         })
 
         this.player.addListener('changed-player', () => {
-            if (!this.volumeAutoReset) {
-                return
-            }
+            
             this.__getStatus().then((status) => {
-                if (status.state == 'pause' || status.state == 'stop') {
+                // Volume resetting
+                if (this.volumeAutoReset && (status.state == 'pause' || status.state == 'stop')) {
                     this.volumeTimeoutEntity = setTimeout(() => {
                         this.saveVolume(80)
                         logger.debug('volume has been turned back')
                     }, this.volumeTimeout * 1000)
-                } else {
+                } else if (this.volumeAutoReset && !(status.state == 'pause' || status.state == 'stop')) {
                     clearTimeout(this.volumeTimeoutEntity)
+                }
+
+                if (status.state == 'play') {
+                    this.onPlaying()
+                }
+
+                if (status.state == 'pause') {
+                    this.onPausing()
+                }
+
+                if (status.state == 'stop') {
+                    this.onStopping()
                 }
             })
         })

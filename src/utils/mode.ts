@@ -6,7 +6,8 @@ import {
     MODE_PLAYING_ENABLED,
     MODE_PLAYING_DISABLED,
     MODE_PAUSING_ENABLED,
-    MODE_PAUSING_DISABLED
+    MODE_PAUSING_DISABLED,
+    MODE_ALWAYS_DISABLED
 } from '../constants'
 
 interface intentConfiguration {
@@ -23,6 +24,14 @@ function getIntentList(enabledIntent: string[], disabledIntent: string[]): inten
             enable: true
         })
     })
+    // add always disabled intent to the list
+    MODE_ALWAYS_DISABLED.forEach(intent => {
+        res.push({
+            intentId: `${SNIPS_PREFIX}${intent}`,
+            enable: false
+        })
+    })
+
     // add specific enabled intent to the list
     enabledIntent.forEach(intent => {
         res.push({
