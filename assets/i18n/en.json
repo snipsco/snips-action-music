@@ -48,27 +48,27 @@
         ],
         "notFound": {
             "playTrack": [
-                "Sorry I can't find the song {{ track }}.",
+                "Sorry I can't find the song {{ track }} in my offline library.",
                 "Sorry I don't have {{ track }} in my local library."
             ],
             "playTrackArtist": [
-                "It seems there is no song called {{ track }} by {{ artist }}.",
-                "Sorry I can't find the song {{ track }} by {{ artist }}."
+                "It seems there is no song called {{ track }} by {{ artist }} in my offline library.",
+                "Sorry I can't find the song {{ track }} by {{ artist }} in my local library."
             ],
             "playAlbum": [
                 "It seems there is no album {{ album }} in my offline library.",
-                "Sorry I cant find {{ album }} album."
+                "Sorry I cant find {{ album }} album in my local library."
             ],
             "playAlbumArtist": [
-                "It seems there is no album called {{ album }} by {{ artist }}."
+                "It seems there is no album called {{ album }} by {{ artist }} in my offline library."
             ],
             "playArtist": [
-                "Sorry I dont find any songs from artist {{ artist }} in my library.",
+                "Sorry I dont find any songs from artist {{ artist }} in my offline library.",
                 "It seems there are no songs from {{ artist }} in my local library."
             ],
             "playPlaylist": [
-                "Sorry I can't find a playlist named {{ playlist }}.",
-                "It seems there are no songs from {{ playlist }} playlist."
+                "Sorry I can't find a playlist named {{ playlist }} in my local library.",
+                "It seems there are no songs from {{ playlist }} playlist in my offline library."
             ]
         },
         "nothingPlaying": [
