@@ -46,15 +46,31 @@
         "nluSlotErrorBad": [
             "Sorry I didn't quite get that."
         ],
-        "notFound": [
-            "Sorry I have ten thousand songs stored. Try asking for something else!",
-            "Sorry I don't think I have that in my offline library.",
-            "Sorry I don't have that one.",
-            "I'm afraid I don't have that one.",
-            "I only have ten thousand songs, try with something else.",
-            "Sorry I only have ten thousand songs and I don't have that one.",
-            "I have a quite small offline library, try some other music instead." 
-        ],
+        "notFound": {
+            "playTrack": [
+                "Sorry I can't find the song {{ track }}.",
+                "Sorry I don't have {{ track }} in my local library."
+            ],
+            "playTrackArtist": [
+                "It seems there is no song called {{ track }} by {{ artist }}.",
+                "Sorry I can't find the song {{ track }} by {{ artist }}."
+            ],
+            "playAlbum": [
+                "It seems there is no album {{ album }} in my offline library.",
+                "Sorry I cant find {{ album }} album."
+            ],
+            "playAlbumArtist": [
+                "It seems there is no album called {{ album }} by {{ artist }}."
+            ],
+            "playArtist": [
+                "Sorry I dont find any songs from artist {{ artist }} in my library.",
+                "It seems there are no songs from {{ artist }} in my local library."
+            ],
+            "playPlaylist": [
+                "Sorry I can't find a playlist named {{ playlist }}.",
+                "It seems there are no songs from {{ playlist }} playlist."
+            ]
+        },
         "nothingPlaying": [
             "There is nothing playing right now, if you want to play any music just ask for it.",
             "There is nothing playing right now.",

@@ -22,12 +22,18 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
         } 
     }
 
-    if (!music.songName && !music.albumName && !music.artistName && music.playlistName == 'something') {
+    if (
+        !music.songName && 
+        !music.albumName && 
+        !music.artistName && 
+        music.playlistName == 'something'
+    ) {
         // Only playlist name with something detected, play random
         return playRandomHandler(msg, flow, hermes, player, options)
     }
 
     const scenario: string = getScenario(music)
+    let notFoundFlag: boolean = false
 
     // Play by condition composed of song?, artist?, album? (list)
     if (
@@ -35,42 +41,78 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
         scenario === 'B' ||
         scenario === 'C'
     ) {
-        await player.createPlayListIfPossible(
-            music.songName, 
-            music.albumName, 
-            music.artistName
-        )
+        try {
+            await player.createPlayListIfPossible(
+                music.songName, 
+                music.albumName, 
+                music.artistName
+            )
+        } catch (error) {
+            if (error.message == 'notFound') {
+                notFoundFlag = true
+            } else {
+                throw error
+            }
+        }
     }
 
     // Load an exist playlist
     if (scenario === 'D') {
         logger.debug('Scenario D')
-        await player.loadPlaylistIfPossible(music.playlistName)
+        try {
+            await player.loadPlaylistIfPossible(music.playlistName)            
+        } catch (error) {
+            if (error.message == 'notFound') {
+                notFoundFlag = true
+            } else {
+                throw error
+            }
+        }
     }
 
     await player.play()
 
     switch (scenario) {
         case 'A':
-            return music.artistName ? translation.random('info.playTrackArtist' ,{
+            return music.artistName ? 
+            
+            translation.random(notFoundFlag ? 
+                'error.notFound.playTrackArtist':
+                'info.playTrackArtist', {
                 track: music.songName,
                 artist: music.artistName
-            }): translation.random('info.playTrack', {
+            }): 
+            
+            translation.random(notFoundFlag ? 
+                'error.notFound.playTrack':
+                'info.playTrack', {
                 track: music.songName
             })
         case 'B':
-            return music.albumName ? translation.random('info.playAlbumArtist', {
+            return music.albumName ? 
+            
+            translation.random(notFoundFlag ? 
+                'error.notFound.playAlbumArtist':
+                'info.playAlbumArtist', {
                 album: music.albumName,
                 artist: music.artistName
-            }) : translation.random('info.playAlbum', {
+            }) : 
+            
+            translation.random(notFoundFlag ? 
+                'error.notFound.playAlbum':
+                'info.playAlbum', {
                 album: music.albumName
             })
         case 'C':
-            return translation.random('info.playArtist', {
+            return translation.random(notFoundFlag ?
+                'error.notFound.playArtist':
+                'info.playArtist', {
                 artist: music.artistName
             })
         case 'D': 
-            return translation.random('info.playPlaylist', {
+            return translation.random(notFoundFlag ?
+                'error.notFound.playPlaylist':
+                'info.playPlaylist', {
                 playlist: music.playlistName
             })
     }
