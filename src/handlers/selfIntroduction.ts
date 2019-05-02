@@ -5,5 +5,5 @@ export const selfIntroductionHandler: Handler = async function (msg, flow, herme
     logger.debug('selfIntroduction')
     flow.end()
 
-    return translation.random('info.selfIntroduction', {})
+    return translation.random('info.selfIntroduction')
 }
