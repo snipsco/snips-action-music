@@ -52,9 +52,6 @@ export const INTENTS: string[] = [
     'VolumeDown',
     'VolumeUp',
     'VolumeSet',
-    'SelfIntroduction',
-    'StartInjection',
-    'RevertInjection',
     'GetInfos',
     'PreviousSong',
     'NextSong',
@@ -66,12 +63,9 @@ export const MODE_ALWAYS_ENABLED: string[] = [
     'PlayMusic',
     'VolumeDown',
     'VolumeUp',
-    'VolumeSet',
-    'SelfIntroduction'
+    'VolumeSet'
 ]
 export const MODE_ALWAYS_DISABLED: string[] = [
-    'StartInjection',
-    'RevertInjection'
 ]
 export const MODE_INIT_DISABLED: string[] = [
     'GetInfos',

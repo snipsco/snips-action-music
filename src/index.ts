@@ -73,7 +73,7 @@ export default function ({
                 }
 
                 logger.debug(config)
-                logger.debug(handlerOptions.confidenceScore)
+                //logger.debug(handlerOptions.confidenceScore)
 
                 onIntentDetected(hermes, musicPlayer, handlerOptions)
                 // subscribe to sessionStarted and sessionEnded

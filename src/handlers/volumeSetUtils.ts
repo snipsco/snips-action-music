@@ -21,7 +21,7 @@ export const extractVolumeNumber = function(msg: IntentMessage, slotDropRatio: n
     slotNamesRaw.forEach( (slot_name_raw) => {
         let tempSlot: NluSlot<slotType.custom> | null = message.getSlotsByName(msg, slot_name_raw, {
             onlyMostConfident: true,
-            threshold: slotDropRatio
+            threshold: 0.3 // Only for demo purpose
         })
         if (tempSlot) {
             res[camelize.camelize(slot_name_raw)] = tempSlot.value.value

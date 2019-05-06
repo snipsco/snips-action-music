@@ -161,11 +161,18 @@ export class SnipsPlayer {
      * Initialise player as soon as it's ready
      */
     __init() {
+        logger.info('MPD client is ready to use')
         this.isReady = true
         this.setVolumeToNormal()
-        this.stop()
-        this.setMode()
-        logger.info('MPD client is ready to use')
+            .then(() => {
+                this.stop()
+            })
+            .then(() => {
+                this.setMode()
+            })
+            .then(() => {
+                this.onStopping(this.dialog)
+            })
     }
 
     // Player controlling commands
@@ -201,7 +208,7 @@ export class SnipsPlayer {
      */
     setMode(mode: string | null = null) {
         this.playerMode = PlayerMode[mode || PlayerMode[this.playerMode]]
-        logger.debug('setting player to: ', this.playerMode)
+        logger.debug('setting player to: ', PlayerMode[this.playerMode])
 
         switch(this.playerMode) {
             case PlayerMode.random:

@@ -26,12 +26,14 @@ function getIntentList(enabledIntent: string[], disabledIntent: string[]): inten
         })
     })
     // add always disabled intent to the list
-    MODE_ALWAYS_DISABLED.forEach(intent => {
-        res.push({
-            intentId: `${SNIPS_PREFIX}${intent}`,
-            enable: false
+    if (MODE_ALWAYS_DISABLED.length > 0) {
+        MODE_ALWAYS_DISABLED.forEach(intent => {
+            res.push({
+                intentId: `${SNIPS_PREFIX}${intent}`,
+                enable: false
+            })
         })
-    })
+    }
 
     // add specific enabled intent to the list
     enabledIntent.forEach(intent => {
