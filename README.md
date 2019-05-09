@@ -1,23 +1,32 @@
 # snips-action-mpd
-#### 
 
-## Setup
+## Introduction
+
+Nodejs version of Snips Walkman Music Assistant demo. It handles Snips dialogue output, converts structured date to some specific commands to control a target music player. 
+
+## Requirements
+
+This project is based on [mpd](https://www.musicpd.org/) and a Javascript library [mpc.js](https://github.com/hbenl/mpc-js-node).
+
+## Make it work
+
+#### Setup
+
+To install the dependencies, builds the action and creates the config.ini file, run the following command:
 
 ```sh
-# Install the dependencies, builds the action and creates the config.ini file.
 sh setup.sh
 ```
 
-## Run
+#### Run
 
-- Dev mode:
+For dev mode:
 
 ```sh
-# Dev mode watches for file changes and restarts the action.
 npm run dev
 ```
 
-- Prod mode:
+For prod mode:
 
 ```sh
 # 1) Lint, transpile and test.
@@ -26,24 +35,11 @@ npm start
 node action-snips.js
 ```
 
-## Debug
+#### Debug
 
 In the `action-snips.js` file:
 
 ```js
 // Uncomment this line to print everything
-// debug.enable(name + ':*')
+debug.enable(name + ':*')
 ```
-
-## Test
-
-*Requires [mosquitto](https://mosquitto.org/download/) to be installed.*
-
-```sh
-npm run test
-```
-
-**In test mode, i18n output and http calls are mocked.**
-
-- **http**: see `tests/httpMocks/index.ts`
-- **i18n**: see `src/factories/i18nFactory.ts`
