@@ -1,5 +1,5 @@
 export const DEFAULT_LOCALE = 'english'
-export const SUPPORTED_LOCALES = [ 'english', 'french' ]
+export const SUPPORTED_LOCALES = ['english', 'french']
 export const DEFAULT_LANGUAGE = 'en'
 export const LANGUAGE_MAPPINGS = {
     english: 'en',
@@ -56,7 +56,7 @@ export const INTENTS: string[] = [
     'PreviousSong',
     'NextSong',
     'ResumeMusic',
-    'SpeakerInterrupt'
+    'StopSilence'
 ]
 // Intents which are always enabled
 export const MODE_ALWAYS_ENABLED: string[] = [
@@ -65,30 +65,25 @@ export const MODE_ALWAYS_ENABLED: string[] = [
     'VolumeUp',
     'VolumeSet'
 ]
-export const MODE_ALWAYS_DISABLED: string[] = [
-]
+export const MODE_ALWAYS_DISABLED: string[] = []
 export const MODE_INIT_DISABLED: string[] = [
     'GetInfos',
     'PreviousSong',
     'NextSong',
     'ResumeMusic',
-    'SpeakerInterrupt'
+    'StopSilence'
 ]
 export const MODE_PLAYING_ENABLED: string[] = [
     'GetInfos',
     'PreviousSong',
     'NextSong',
-    'SpeakerInterrupt'
+    'StopSilence'
 ]
-export const MODE_PLAYING_DISABLED: string[] = [
-    'ResumeMusic'
-]
-export const MODE_PAUSING_ENABLED: string[] = [
-    'ResumeMusic'
-]
+export const MODE_PLAYING_DISABLED: string[] = ['ResumeMusic']
+export const MODE_PAUSING_ENABLED: string[] = ['ResumeMusic']
 export const MODE_PAUSING_DISABLED: string[] = [
     'GetInfos',
     'PreviousSong',
     'NextSong',
-    'SpeakerInterrupt'
+    'StopSilence'
 ]

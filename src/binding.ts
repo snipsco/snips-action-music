@@ -1,75 +1,68 @@
 import { Dialog, Hermes } from 'hermes-javascript'
 import { SNIPS_PREFIX } from './constants'
 import handlers, { HandlerOptions } from './handlers'
-import { 
-    sessionStarted,
-    sessionEnded
-} from './handlers'
+import { sessionStarted, sessionEnded } from './handlers'
 
 import { SnipsPlayer } from './SnipsPlayer'
 
-export const onIntentDetected = function (hermes: Hermes, player: SnipsPlayer, options: HandlerOptions) {
+export const onIntentDetected = function(
+    hermes: Hermes,
+    player: SnipsPlayer,
+    options: HandlerOptions
+) {
     const dialog: Dialog = hermes.dialog()
     dialog.flows([
         // Music playing request intent
         {
-            intent: `${SNIPS_PREFIX}PlayMusic`, 
-            action: (msg, flow) => handlers.playMusic(msg, flow, hermes, player, options)
-        },
-        {
-            intent: `${SNIPS_PREFIX}PlayWhatever`, 
-            action: (msg, flow) => handlers.playRandom(msg, flow, hermes, player, options)
+            intent: `${SNIPS_PREFIX}PlayMusic`,
+            action: (msg, flow) =>
+                handlers.playMusic(msg, flow, hermes, player, options)
         },
         // Music controlling intent
         {
             intent: `${SNIPS_PREFIX}PreviousSong`,
-            action: (msg, flow) => handlers.previousSong(msg, flow, hermes, player, options)
+            action: (msg, flow) =>
+                handlers.previousSong(msg, flow, hermes, player, options)
         },
         {
             intent: `${SNIPS_PREFIX}NextSong`,
-            action: (msg, flow) => handlers.nextSong(msg, flow, hermes, player, options)
+            action: (msg, flow) =>
+                handlers.nextSong(msg, flow, hermes, player, options)
         },
         {
-            intent: `${SNIPS_PREFIX}SpeakerInterrupt`,
-            action: (msg, flow) => handlers.speakerInterrupt(msg, flow, hermes, player, options)
+            intent: `${SNIPS_PREFIX}StopSilence`,
+            action: (msg, flow) =>
+                handlers.speakerInterrupt(msg, flow, hermes, player, options)
         },
         {
             intent: `${SNIPS_PREFIX}ResumeMusic`,
-            action: (msg, flow) => handlers.resumeMusic(msg, flow, hermes, player, options)
+            action: (msg, flow) =>
+                handlers.resumeMusic(msg, flow, hermes, player, options)
         },
         {
             intent: `${SNIPS_PREFIX}VolumeUp`,
-            action: (msg, flow) => handlers.volumeUp(msg, flow, hermes, player, options)
+            action: (msg, flow) =>
+                handlers.volumeUp(msg, flow, hermes, player, options)
         },
         {
             intent: `${SNIPS_PREFIX}VolumeDown`,
-            action: (msg, flow) => handlers.volumeDown(msg, flow, hermes, player, options)
+            action: (msg, flow) =>
+                handlers.volumeDown(msg, flow, hermes, player, options)
         },
         {
             intent: `${SNIPS_PREFIX}VolumeSet`,
-            action: (msg, flow) => handlers.volumeSet(msg, flow, hermes, player, options)
+            action: (msg, flow) =>
+                handlers.volumeSet(msg, flow, hermes, player, options)
         },
         {
             intent: `${SNIPS_PREFIX}GetInfos`,
-            action: (msg, flow) => handlers.getInfo(msg, flow, hermes, player, options)
-        },
-        {
-            intent: `${SNIPS_PREFIX}SetMode`,
-            action: (msg, flow) => handlers.setMode(msg, flow, hermes, player, options)
-        },
-        // Additional intent for demo
-        {
-            intent: `${SNIPS_PREFIX}InjectionControl`,
-            action: (msg, flow) => handlers.injectionControl(msg, flow, hermes, player, options)
-        },
-        {
-            intent: `${SNIPS_PREFIX}SelfIntroduction`,
-            action: (msg, flow) => handlers.selfIntroduction(msg, flow, hermes, player, options)
-        },
+            action: (msg, flow) =>
+                handlers.getInfo(msg, flow, hermes, player, options)
+        }
     ])
 }
 
-export const onSessionToggle = function (hermes: Hermes, player: SnipsPlayer) {
+export const onSessionToggle = function(hermes: Hermes, player: SnipsPlayer) {
     const dialog: Dialog = hermes.dialog()
 
     // Subscribe to system event
