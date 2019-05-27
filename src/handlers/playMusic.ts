@@ -11,6 +11,11 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
     logger.debug('playMusicHandler')
     flow.end()
     const music: musicInfoRes | null = musicInfoExtractor(msg, options.confidenceScore.slotDrop)
+    
+    if (music && music.artistName && music.artistName.toLowerCase().includes('cancel')) {
+        flow.end()
+        return
+    }
 
     if (!music) {
         if (msg.intent.confidenceScore >= 0.7) {
