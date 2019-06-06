@@ -16,7 +16,7 @@ import {
 export default function ({
     hermesOptions = {
         // debug mock
-        address: 'snips-assistant-demo.local:1883'
+        // address: 'snips-assistant-demo.local:1883'
     },
     bootstrapOptions = {}
 } = {}) : Promise<() => void>{
@@ -42,8 +42,8 @@ export default function ({
                 }
 
                 const musicPlayer = new SnipsPlayer(hermes.dialog(), {
-                    host: String(config.mpdHost) || undefined,
-                    port: Number(config.mpdPort) || undefined,
+                    host: String(config.mpdHost) || "localhost",
+                    port: Number(config.mpdPort) || 6600,
                     volumeAutoReset: Boolean(config.volumeAutoReset) || undefined,
                     volumeTimeout: Number(config.volumeTimeout) || undefined,
                     playerMode: String(config.playerModeDefault) || undefined,
