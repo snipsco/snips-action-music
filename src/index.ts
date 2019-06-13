@@ -27,10 +27,6 @@ export default function ({
                 await bootstrap(bootstrapOptions)
                 const config = configFactory.get()
 
-                hermes.feedback().publish('notification_off', {
-                    siteId: 'default'
-                })
-
                 const say: any = (text: string, siteId?: string) => {
                     hermes.dialog().publish('start_session', {
                         init: {
@@ -41,7 +37,49 @@ export default function ({
                     })
                 }
 
-                const musicPlayer = new SnipsPlayer(hermes.dialog(), {
+                const onPlaying = () => {
+                    // Context control if it's enabled
+                    if(Boolean(config.contextControl)) {
+                        mode.setPlaying(hermes.dialog())
+                    }
+
+                    // Sound feedback control if it's enabled
+                    if(Boolean(config.soundFeedbackControl)) {
+                        hermes.feedback().publish('notification_off', {
+                            siteId: 'default'
+                        })
+                    }
+                }
+
+                const onPausing = () => {
+                    // Context control if it's enabled
+                    if(Boolean(config.contextControl)) {
+                        mode.setPausing(hermes.dialog())
+                    }
+
+                    // Sound feedback control if it's enabled
+                    if(Boolean(config.soundFeedbackControl)) {
+                        hermes.feedback().publish('notification_on', {
+                            siteId: 'default'
+                        })
+                    }
+                }
+
+                const onStopping = () => {
+                    // Context control if it's enabled
+                    if(Boolean(config.contextControl)) {
+                        mode.setInit(hermes.dialog())
+                    }
+
+                    // Sound feedback control if it's enabled
+                    if(Boolean(config.soundFeedbackControl)) {
+                        hermes.feedback().publish('notification_off', {
+                            siteId: 'default'
+                        })
+                    }
+                }
+
+                const musicPlayer = new SnipsPlayer({
                     host: String(config.mpdHost) || "localhost",
                     port: Number(config.mpdPort) || 6600,
                     volumeAutoReset: Boolean(config.volumeAutoReset) || undefined,
@@ -50,9 +88,9 @@ export default function ({
                     onReady: () => say(translation.random('info.ready')),
                     onDisconnect: () => say(translation.random('error.mpdConnectionEnd')),
                     onConnectionFaild: () => say(translation.random('error.mpdConnectionFaild')),
-                    onPlaying: (dialog: Dialog) => Boolean(config.contextControl) ? mode.setPlaying(dialog) : {},
-                    onPausing: (dialog: Dialog) => Boolean(config.contextControl) ? mode.setPausing(dialog) : {},
-                    onStopping: (dialog: Dialog) => Boolean(config.contextControl) ? mode.setInit(dialog) : {}
+                    onPlaying,
+                    onPausing,
+                    onStopping
                 })
 
                 // connect to mpd server, retry for 3 times in case it's booting

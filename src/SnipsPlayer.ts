@@ -31,7 +31,6 @@ enum PlayerMode {
  */
 export class SnipsPlayer {
     // Main object to be interfaced
-    dialog: Dialog
     player: MPC
 
     // MPD client connection info
@@ -66,8 +65,7 @@ export class SnipsPlayer {
     onPausing: any = null
     onStopping: any = null
 
-    constructor(dialog: Dialog, options: SnipsPlayerInitOptions) {
-        this.dialog = dialog
+    constructor(options: SnipsPlayerInitOptions) {
         this.player = new MPC()
 
         this.host = options.host || 'localhost'
@@ -143,15 +141,15 @@ export class SnipsPlayer {
                 }
 
                 if (status.state == 'play') {
-                    this.onPlaying(this.dialog)
+                    this.onPlaying()
                 }
 
                 if (status.state == 'pause') {
-                    this.onPausing(this.dialog)
+                    this.onPausing()
                 }
 
                 if (status.state == 'stop') {
-                    this.onStopping(this.dialog)
+                    this.onStopping()
                 }
             })
         })
@@ -171,7 +169,7 @@ export class SnipsPlayer {
                 this.setMode()
             })
             .then(() => {
-                this.onStopping(this.dialog)
+                this.onStopping()
             })
     }
 
