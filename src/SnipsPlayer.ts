@@ -1,7 +1,5 @@
 import { MPC } from 'mpc-js'
 import { logger } from './utils/logger'
-import { Dialog } from 'hermes-javascript'
-import { isObject } from 'util';
 
 interface SnipsPlayerInitOptions {
     host?: string
@@ -81,7 +79,7 @@ export class SnipsPlayer {
         this.onPlaying = options.onPlaying || null
         this.onPausing = options.onPausing || null
         this.onStopping = options.onStopping || null
-        this.__startMonitoring()
+        this.startMonitoring()
     }
 
     /**
@@ -110,9 +108,9 @@ export class SnipsPlayer {
     /**
      * Add event listener to the MPD. When it's ready, initialise the play status
      */
-    __startMonitoring() {
+    private startMonitoring() {
         this.player.addListener('ready', () => {
-            this.__init()
+            this.init()
             this.onReady()
         })
     
@@ -129,7 +127,7 @@ export class SnipsPlayer {
         })
 
         this.player.addListener('changed-player', () => {
-            this.__getStatus().then((status) => {
+            this.getStatus().then((status) => {
                 // Volume resetting
                 if (this.volumeAutoReset && (status.state == 'pause' || status.state == 'stop')) {
                     this.volumeTimeoutEntity = setTimeout(() => {
@@ -158,7 +156,7 @@ export class SnipsPlayer {
     /**
      * Initialise player as soon as it's ready
      */
-    __init() {
+    private init() {
         logger.info('MPD client is ready to use')
         this.isReady = true
         this.setVolumeToNormal()
@@ -210,22 +208,22 @@ export class SnipsPlayer {
 
         switch(this.playerMode) {
             case PlayerMode.random:
-                return this.__setToRandom()
+                return this.setToRandom()
             case PlayerMode.repeat:
-                return this.__setToRepeat()
+                return this.setToRepeat()
             case PlayerMode.single:
-                return this.__setToSingle()
+                return this.setToSingle()
             case PlayerMode.sequence:
-                return this.__setToSequence()
+                return this.setToSequence()
             default:
-                return this.__setToSequence()
+                return this.setToSequence()
         }
     }
 
     /**
      * Play in random order
      */
-    __setToRandom() {
+    private setToRandom() {
         return this.player.playbackOptions.setRandom(true)
         .then(() => {
             return this.player.playbackOptions.setRepeat(false)
@@ -238,7 +236,7 @@ export class SnipsPlayer {
     /**
      * Play in sequential order
      */
-    __setToSequence() {
+    private setToSequence() {
         return this.player.playbackOptions.setRandom(false)
         .then(() => {
             return this.player.playbackOptions.setRepeat(false)
@@ -251,7 +249,7 @@ export class SnipsPlayer {
     /**
      * Repeat the entire list (endless mode)
      */
-    __setToRepeat() {
+    private setToRepeat() {
         return this.player.playbackOptions.setRandom(true)
         .then(() => {
             return this.player.playbackOptions.setRepeat(true)
@@ -264,7 +262,7 @@ export class SnipsPlayer {
     /**
      * Repeat the single song
      */
-    __setToSingle() {
+    private setToSingle() {
         return this.player.playbackOptions.setRandom(false)
         .then(() => {
             return this.player.playbackOptions.setRepeat(true)
@@ -278,13 +276,13 @@ export class SnipsPlayer {
      * Get the current playing info
      */
     getPlayingInfo() {
-        return this.__getStatus()
+        return this.getStatus()
         .then((res) => {
             logger.debug(res)
             if (res.state == 'stop' || res.state == 'pause') {
                 throw new Error('nothingPlaying')
             }
-            return this.__getCurrentSong()
+            return this.getCurrentSong()
         })
     }
 
@@ -292,7 +290,7 @@ export class SnipsPlayer {
      * Check if the player is playing 
      */
     isPlaying() {
-        return this.__getStatus()
+        return this.getStatus()
         .then((res) => {
             return res.state == 'play' ? true : false
         })
@@ -302,7 +300,7 @@ export class SnipsPlayer {
      * Check if the player is stoping 
      */
     isStoping() {
-        return this.__getStatus()
+        return this.getStatus()
         .then((res) => {
             return res.state == 'stop' ? true : false
         })
@@ -311,13 +309,13 @@ export class SnipsPlayer {
     /**
      * Wrapper method
      */
-    __getStatus() {
+    private getStatus() {
         return this.player.status.status()
     }
     /**
      * Wrapper method
      */
-    __getCurrentSong() {
+    private getCurrentSong() {
         return this.player.status.currentSong()
     }
     /**
@@ -325,7 +323,7 @@ export class SnipsPlayer {
      * 
      * @param volume 
      */
-    __setVolume(volume: number) {
+    private setVolume(volume: number) {
         return this.player.playbackOptions.setVolume(volume)
     }
 
@@ -336,21 +334,21 @@ export class SnipsPlayer {
      */
     saveVolume(volume: number) {
         this.volume = volume
-        return this.__setVolume(this.volume)
+        return this.setVolume(this.volume)
     }
 
     /**
      * Set the volume to silence level
      */
     setVolumeToSilence() {
-        return this.__setVolume(this.volumeSilence)
+        return this.setVolume(this.volumeSilence)
     }
 
     /**
      * Set the volume back to normal level
      */
     setVolumeToNormal() {
-        return this.__setVolume(this.volume)
+        return this.setVolume(this.volume)
     }
 
     // Interfacing to 'playMusic' intent
@@ -360,7 +358,7 @@ export class SnipsPlayer {
      * @param album 
      * @param artist 
      */
-    __checkExistance(song: string | undefined, album: string | undefined, artist: string | undefined) {
+    private checkExistance(song: string | undefined, album: string | undefined, artist: string | undefined) {
         return this.player.database.search([
             ['Title', song ? song : ''], 
             ['Album', album ? album : ''], 
@@ -374,7 +372,7 @@ export class SnipsPlayer {
      * @param album 
      * @param artist 
      */
-    __createPlayList(song: string | undefined, album: string | undefined, artist: string | undefined) {
+    private createPlayList(song: string | undefined, album: string | undefined, artist: string | undefined) {
         return this.player.database.searchAdd([
             ['Title', song ? song : ''], 
             ['Album', album ? album : ''], 
@@ -392,7 +390,7 @@ export class SnipsPlayer {
      * @param artist 
      */
     createPlayListIfPossible(song: string | undefined, album: string | undefined, artist: string | undefined) {
-        return this.__checkExistance(song, album, artist)
+        return this.checkExistance(song, album, artist)
         .then((res) => {
             if (!res.length) {
                 throw new Error('notFound')
@@ -401,7 +399,7 @@ export class SnipsPlayer {
             }
         })
         .then(() => {
-            return this.__createPlayList(song, album, artist)
+            return this.createPlayList(song, album, artist)
         })
     }
 
@@ -409,7 +407,7 @@ export class SnipsPlayer {
      * Check if the provided playlist is exist
      * @param playlist 
      */
-    __checkExistancePlaylist(playlist: string) {
+    private checkExistancePlaylist(playlist: string) {
         return this.player.storedPlaylists.listPlaylist(`${playlist.toLowerCase()}.m3u`)
     }
 
@@ -417,7 +415,7 @@ export class SnipsPlayer {
      * Load the provided playlist to current playlist
      * @param playlist 
      */
-    __loadSongFromSavedPlaylist(playlist: string) {
+    private loadSongFromSavedPlaylist(playlist: string) {
         return this.player.storedPlaylists.load(`${playlist.toLowerCase()}.m3u`)
     }
 
@@ -432,7 +430,7 @@ export class SnipsPlayer {
         if (!playlist) {
             throw new Error('no playlist provided')
         }
-        return this.__checkExistancePlaylist(String(playlist))
+        return this.checkExistancePlaylist(String(playlist))
         .then((res) => {
             if (!res.length) {
                 logger.debug(res)
@@ -446,14 +444,14 @@ export class SnipsPlayer {
             throw new Error('notFound')
         })
         .then(() => {
-            return this.__loadSongFromSavedPlaylist(playlist)
+            return this.loadSongFromSavedPlaylist(playlist)
         })
     }
 
     /**
      * Get all the registered songs/ playlists/ directories
      */
-    __getAllMPDEntities() {
+    private getAllMPDEntities() {
         return this.player.database.listAll()
     }
 
@@ -461,7 +459,7 @@ export class SnipsPlayer {
      * Get a random playlist
      */
     getLoadedPlaylistRandom() {
-        return this.__getAllMPDEntities()
+        return this.getAllMPDEntities()
         .then(res => {
             let playlists: string[] = []
             res.forEach((entity => {
