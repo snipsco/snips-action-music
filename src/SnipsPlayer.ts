@@ -169,6 +169,10 @@ export class SnipsPlayer {
             .then(() => {
                 this.onStopping()
             })
+            .catch( error => {
+                logger.error('There is an error detected when initialising the player')
+                logger.error(error.message)
+            })
     }
 
     // Player controlling commands
