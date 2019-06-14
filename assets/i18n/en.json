@@ -12,7 +12,7 @@
         "config": [
             "Sorry, there was an error with your config file."
         ],
-        "locale": [
+        "localisation": [
             "Sorry, there was an error with your language settings."
         ],
         "unspecific": [
