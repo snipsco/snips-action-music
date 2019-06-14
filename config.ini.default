@@ -5,7 +5,7 @@ mqtt_host=localhost
 mqtt_port=1883
 
 mpd_host=localhost
-mqtt_port=6600
+mpd_port=6600
 
 # Reset volume after a certain time after it's stopped
 volume_auto_reset=false
