@@ -467,7 +467,7 @@ export class SnipsPlayer {
         .then(res => {
             let playlists: string[] = []
             res.forEach((entity => {
-                if (entity.match('\.m3u')) {
+                if (entity.match('.m3u')) {
                     playlists.push(entity)
                 }
             }))

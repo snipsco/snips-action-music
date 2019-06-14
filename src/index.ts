@@ -7,17 +7,14 @@ import {
     onSessionToggle
 } from './binding'
 import { SnipsPlayer } from './SnipsPlayer'
-import { HandlerOptions } from './handlers';
+import { HandlerOptions } from './handlers'
 import {
     CONFIDENCE_DEFAULT
 } from './constants'
 
 // Initialize hermes
 export default function ({
-    hermesOptions = {
-        // debug mock
-        // address: 'snips-assistant-demo.local:1883'
-    },
+    hermesOptions = {},
     bootstrapOptions = {}
 } = {}) : Promise<() => void>{
     return new Promise((resolve, reject) => {
@@ -39,12 +36,12 @@ export default function ({
 
                 const onPlaying = () => {
                     // Context control if it's enabled
-                    if(Boolean(config.contextControl)) {
+                    if(config.contextControl) {
                         mode.setPlaying(hermes.dialog())
                     }
 
                     // Sound feedback control if it's enabled
-                    if(Boolean(config.soundFeedbackControl)) {
+                    if(config.soundFeedbackControl) {
                         hermes.feedback().publish('notification_off', {
                             siteId: 'default'
                         })
@@ -53,12 +50,12 @@ export default function ({
 
                 const onPausing = () => {
                     // Context control if it's enabled
-                    if(Boolean(config.contextControl)) {
+                    if(config.contextControl) {
                         mode.setPausing(hermes.dialog())
                     }
 
                     // Sound feedback control if it's enabled
-                    if(Boolean(config.soundFeedbackControl)) {
+                    if(config.soundFeedbackControl) {
                         hermes.feedback().publish('notification_on', {
                             siteId: 'default'
                         })
@@ -67,12 +64,12 @@ export default function ({
 
                 const onStopping = () => {
                     // Context control if it's enabled
-                    if(Boolean(config.contextControl)) {
+                    if(config.contextControl) {
                         mode.setInit(hermes.dialog())
                     }
 
                     // Sound feedback control if it's enabled
-                    if(Boolean(config.soundFeedbackControl)) {
+                    if(config.soundFeedbackControl) {
                         hermes.feedback().publish('notification_off', {
                             siteId: 'default'
                         })
@@ -80,7 +77,7 @@ export default function ({
                 }
 
                 const musicPlayer = new SnipsPlayer({
-                    host: String(config.mpdHost) || "localhost",
+                    host: String(config.mpdHost) || 'localhost',
                     port: Number(config.mpdPort) || 6600,
                     volumeAutoReset: Boolean(config.volumeAutoReset) || undefined,
                     volumeTimeout: Number(config.volumeTimeout) || undefined,

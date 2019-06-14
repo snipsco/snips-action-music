@@ -1,4 +1,4 @@
-import { Dialog } from "hermes-javascript"
+import { Dialog } from 'hermes-javascript'
 import { 
     SNIPS_PREFIX,
     MODE_ALWAYS_ENABLED,

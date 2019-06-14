@@ -14,7 +14,7 @@ import { injectionControlHandler } from './injectionControl'
 import { playRandomHandler } from './playRandom'
 import { setModeHandler } from './setMode'
 import { selfIntroductionHandler } from './selfIntroduction'
-import { SnipsPlayer } from '../SnipsPlayer';
+import { SnipsPlayer } from '../SnipsPlayer'
 
 export type Handler = (
     message: IntentMessage,
