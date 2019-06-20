@@ -4,15 +4,15 @@
             "Sorry, there was a communication error with the Snips platform."
         ],
         "mpdConnectionFaild": [
-            "Sorry, mpd connection faild."
+            "Sorry, the mpd connection failed."
         ],
         "mpdConnectionEnd": [
-            "Sorry, mpd connection lost."
+            "Sorry, the mpd connection has been lost."
         ],
         "config": [
             "Sorry, there was an error with your config file."
         ],
-        "locale": [
+        "localisation": [
             "Sorry, there was an error with your language settings."
         ],
         "unspecific": [
@@ -21,53 +21,53 @@
         "asrError": [
             "I don't think I understood.",
             "I'm not sure I understood.",
-            "Sorry I didn't get that."
+            "Sorry, I didn't get that."
         ],
         "noSlotValueFound": [
-            "Sorry I don't know how to help you with that.",
+            "Sorry, I don't know how to help you with that.",
             "I don't think I can help you with that.",
-            "Sorry, I dont't think I understood.",
-            "Em, I dont't know that one."
+            "Sorry, I don't think I understood.",
+            "Em, I don't know that one."
         ],
         "nluIntentErrorStanderd": [
-            "Sorry I don't know how to help you with that.",
+            "Sorry, I don't know how to help you with that.",
             "I don't think I can help you with that.",
-            "Sorry, I dont't think I understood.",
-            "Em, I dont't know that one."
+            "Sorry, I don't think I understood.",
+            "Em, I don't know that one."
         ],
         "nluIntentErrorBad": [
-            "Sorry I don't think I understood.",
+            "Sorry, I don't think I understood.",
             "I don't think I understood."
         ],
         "nluSlotErrorStanderd": [
-            "Sorry I didn't quite get that, Feel free to try again when you are ready.",
-            "Sorry I didn't quite get that."
+            "Sorry, I didn't quite get that, feel free to try again when you are ready.",
+            "Sorry, I didn't quite get that."
         ],
         "nluSlotErrorBad": [
-            "Sorry I didn't quite get that."
+            "Sorry, I didn't quite get that."
         ],
         "notFound": {
             "playTrack": [
-                "Sorry I can't find the song {{ track }} in my offline library.",
-                "Sorry I don't have {{ track }} in my local library."
+                "Sorry, I can't find the song {{ track }} in my offline library.",
+                "Sorry, I don't have {{ track }} in my local library."
             ],
             "playTrackArtist": [
-                "It seems there is no song called {{ track }} by {{ artist }} in my offline library.",
+                "It seems there is no song named {{ track }} by {{ artist }} in my offline library.",
                 "Sorry I can't find the song {{ track }} by {{ artist }} in my local library."
             ],
             "playAlbum": [
                 "It seems there is no album {{ album }} in my offline library.",
-                "Sorry I cant find {{ album }} album in my local library."
+                "Sorry, I can't find {{ album }} album in my local library."
             ],
             "playAlbumArtist": [
-                "It seems there is no album called {{ album }} by {{ artist }} in my offline library."
+                "It seems there is no album named {{ album }} by {{ artist }} in my offline library."
             ],
             "playArtist": [
-                "Sorry I dont find any songs from artist {{ artist }} in my offline library.",
+                "Sorry, I don't find any songs from artist {{ artist }} in my offline library.",
                 "It seems there are no songs from {{ artist }} in my local library."
             ],
             "playPlaylist": [
-                "Sorry I can't find a playlist named {{ playlist }} in my local library.",
+                "Sorry, I can't find a playlist named {{ playlist }} in my local library.",
                 "It seems there are no songs from {{ playlist }} playlist in my offline library."
             ]
         },
@@ -132,7 +132,7 @@
             "Removing the previous injection."
         ],
         "selfIntroduction": [
-            "I am an off-line music assistant made by Snips. I can understand more than 10 thousand music, artist and album names. You can ask me queries just like how you ask your friend, such as 'play some Michael Jackson', 'put some jazz music' or 'I want listen some music' etc."
+            "I am an offline music assistant made by Snips. I can understand more than ten thousand music, artist and album names. You can ask me queries just like how you ask your friend, such as 'play some Michael Jackson', 'put some jazz music' or 'I want listen some music' etc."
         ]
     }
 }

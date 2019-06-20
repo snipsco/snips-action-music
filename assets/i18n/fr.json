@@ -4,135 +4,124 @@
             "Désolé, une erreur s'est produite lors de la communication avec la plateforme Snips."
         ],
         "mpdConnectionFaild": [
-            "Sorry, mpd connection faild."
+            "Désolé, la connexion a échoué."
         ],
         "mpdConnectionEnd": [
-            "Sorry, mpd connection lost."
+            "Désolé, nous avons perdu la connexion."
         ],
         "config": [
             "Désolé, une erreur s'est produite avec votre fichier de configuration."
         ],
-        "locale": [
-            "Désolé, une erreur s'est produite avec vos paramètres de localisation."
+        "localisation": [
+            "Désolé, une erreur s'est produite avec vos paramètres de langues."
         ],
         "unspecific": [
             "Oups, quelque chose s'est mal passé."
         ],
         "asrError": [
-            "I don't think I understood.",
-            "I'm not sure I understood.",
-            "Sorry I didn't get that."
+            "Je ne suis pas sûr d'avoir compris.",
+            "Désolé, je n'ai pas compris."
         ],
         "noSlotValueFound": [
-            "Sorry I don't know how to help you with that.",
-            "I don't think I can help you with that.",
-            "Sorry, I dont't think I understood.",
-            "Em, I dont't know that one."
+            "Désolé, je ne vais pas pouvoir t'aider avec ça.",
+            "Désolé, je ne suis pas sûre de pouvoir t'aider avec ça.",
+            "Pas sûr de pouvoir t'aider sur ce coup là."
         ],
         "nluIntentErrorStanderd": [
-            "Sorry I don't know how to help you with that.",
-            "I don't think I can help you with that.",
-            "Sorry, I dont't think I understood.",
-            "Em, I dont't know that one."
+            "Désolé, je ne vais pas pouvoir t'aider avec ça.",
+            "Désolé, je ne suis pas sure de pouvoir t'aider avec ça.",
+            "Pas sûr de pouvoir t'aider sur ce coup là."
         ],
         "nluIntentErrorBad": [
-            "Sorry I don't think I understood.",
-            "I don't think I understood."
+            "Je ne suis pas sûr d'avoir compris.",
+            "Désolé, je n'ai pas compris."
         ],
         "nluSlotErrorStanderd": [
-            "Sorry I didn't quite get that, Feel free to try again when you are ready.",
-            "Sorry I didn't quite get that."
+            "Désolé, je n'ai pas compris. N'hésite pas à réessayer quand tu voudras.",
+            "Désolé, je n'ai pas compris."
         ],
         "nluSlotErrorBad": [
-            "Sorry I didn't quite get that."
+            "Désolé, je n'ai pas compris."
         ],
         "notFound": {
             "playTrack": [
-                "Sorry I can't find the song {{ track }} in my offline library.",
-                "Sorry I don't have {{ track }} in my local library."
+                "Désolé, je n'ai pas trouvé la chanson {{ track }} dans ma bibliothèque hors connexion.",
+                "Désolé, je n'ai pas {{ track }} dans ma bibliothèque locale."
             ],
             "playTrackArtist": [
-                "It seems there is no song called {{ track }} by {{ artist }} in my offline library.",
-                "Sorry I can't find the song {{ track }} by {{ artist }} in my local library."
+                "Désolé, je ne trouve pas le titre {{ track }} de {{ artist }} dans ma bibliothèque locale."
             ],
             "playAlbum": [
-                "It seems there is no album {{ album }} in my offline library.",
-                "Sorry I cant find {{ album }} album in my local library."
+                "Désolé, je ne viois pas d'album {{ album }} dans ma bibliothèque locale."
             ],
             "playAlbumArtist": [
-                "It seems there is no album called {{ album }} by {{ artist }} in my offline library."
+                "Je ne vois pas d'album nommé {{ album }} de {{ artist }} dans ma bibliothèque hors connexion."
             ],
             "playArtist": [
-                "Sorry I dont find any songs from artist {{ artist }} in my offline library.",
-                "It seems there are no songs from {{ artist }} in my local library."
+                "Il n'y a pas de chanson de {{ artist }} dans ma bibliothèque locale."
             ],
             "playPlaylist": [
-                "Sorry I can't find a playlist named {{ playlist }} in my local library.",
-                "It seems there are no songs from {{ playlist }} playlist in my offline library."
+                "Désolé, je ne trouve pas de playlist appelée {{ playlist }} dans ma bibliothèque locale.",
+                "Je ne vois pas de playlist {{ playlist }} dans ma bibliothèque hors connexion."
             ]
         },
         "nothingPlaying": [
-            "There is nothing playing right now, if you want to play any music just ask for it.",
-            "There is nothing playing right now.",
-            "I'm not playing anything at the moment."
+            "Il n'y a pas de musique en cours de lecture."
         ]
     },
     "info": {
         "ready": [
-            "Hello there! I'm an offline music assistant powered by Snips Flow."
+            "Salut ! Je suis l'assistant musical hors connexion de Snips Flow."
         ],
         "resumePlay": [
-            "Resuming music from local library."
+            "Reprise de la musique depuis la bibliothèque locale."
         ],
         "playTrack": [
-            "Playing the song {{ track }}.",
-            "Playing {{ track }}.",
+            "Lecture de la chanson {{ track }}.",
+            "Nous écoutons {{ track }}.",
             "{{ track }}."
         ],
         "playTrackArtist": [
-            "Playing {{ track }} by {{ artist }}.",
-            "Playing the song {{ track }} by {{ artist }}.",
-            "{{ track }} by {{ artist }}."
+            "Chanson {{ track }} de {{ artist }}.",
+            "Lecture de la chanson {{ track }} de {{ artist }}.",
+            "{{ track }} de {{ artist }}."
         ],
         "playAlbum": [
-            "Playing the album {{ album }}.",
-            "Playing songs from album {{ album }}."
+            "Lecture de l'album {{ album }}."
         ],
         "playAlbumArtist": [
-            "Playing the album {{ album }} by {{ artist }}."
+            "Lecture de l'album {{ album }} de {{ artist }}."
         ],
         "playArtist": [
-            "Playing music by {{ artist }}.",
-            "Playing songs by {{ artist }}.",
-            "Playing popular songs by {{ artist }}."
+            "Lecture de chansons de {{ artist }}.",
+            "Lecture des chansons les plus populaires de {{ artist }}."
         ],
         "playPlaylist": [
-            "Playing {{ playlist }}.",
-            "Playing {{ playlist }} music.",
-            "Playing a {{ playlist }} playlist."
+            "Lecture de la playlist {{ playlist }}.",
+            "Lecture de titres de la playlist {{ playlist }}."
         ],
         "reportTrack": [
             "{{ track }}",
-            "Playing {{ track }}."
+            "{{ track }} en cours de lecture."
         ],
         "reportArtist": [
             "{{ artist }}",
-            "It's {{ artist }}.",
-            "Playing music by {{ artist }}."
+            "C'est {{ artist }}.",
+            "Musique de {{ artist }}."
         ],
         "reportAlbum": [
             "{{ album }}",
-            "Playing the album {{ album }}.",
-            "It's {{ album }}."
+            "Album {{ album }}.",
+            "C'est {{ album }}."
         ],
         "startInjection": [
-            "Starting a new injection."
+            "Démarrage de l'injection."
         ],
         "deleteInjection": [
-            "Removing the previous injection."
+            "Suppression de l'injection précédente."
         ],
         "selfIntroduction": [
-            "I am an off-line music assistant made by Snips. I can understand more than 10 thousand music, artist and album names. You can ask me queries just like how you ask your friend, such as 'play some Michael Jackson', 'put some jazz music' or 'I want listen some music' etc."
+            "Je suis l'assistant musical hors connexion créé par Snips. Je peux comprendre 10 milles noms de chansons, d'artistes et d'album. Vous pouvez me poser des questions comme vous les poseriez à un ami, tel que 'mets du Michael Jackson', 'mets du jazz' ou 'J'ai envie d'écouter de la musique', etc."
         ]
     }
 }

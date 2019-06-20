@@ -1,45 +1,70 @@
-# snips-action-mpd
+# snips-action-music
 
-## Introduction
+Snips action code for the Music app
 
-Nodejs version of Snips Walkman Music Assistant demo. It handles Snips dialogue output, converts structured date to some specific commands to control a target music player. 
+Handles Snips dialogue output, converts structured date to some specific commands to control a target music player.
 
-## Requirements
-
-This project is based on [mpd](https://www.musicpd.org/) and a Javascript library [mpc.js](https://github.com/hbenl/mpc-js-node).
-
-## Make it work
-
-#### Setup
-
-To install the dependencies, builds the action and creates the config.ini file, run the following command:
+## Setup
 
 ```sh
+# Install the dependencies, builds the action and creates the config.ini file.
 sh setup.sh
 ```
 
-#### Run
+Don't forget to edit the `config.ini` file.
 
-For dev mode:
+This project is based on [mpd](https://www.musicpd.org/) and a JavaScript library [mpc.js](https://github.com/hbenl/mpc-js-node).
+
+An assistant containing the intents listed below must be installed on your system. Deploy it following [these instructions](https://docs.snips.ai/articles/console/actions/deploy-your-assistant).
+
+## Run
+
+- Dev mode:
 
 ```sh
+# Dev mode watches for file changes and restarts the action.
 npm run dev
 ```
 
-For prod mode:
+- Prod mode:
 
 ```sh
 # 1) Lint, transpile and test.
 npm start
-# 2) Run the action.
-node action-snips.js
+# 2) Compile and run the action.
+node action-music.js
 ```
 
-#### Debug
+## Test & Demo cases
 
-In the `action-snips.js` file:
+This app only supports french 🇫🇷 and english 🇬🇧.
+
+## Debug
+
+In the `action-music.js` file:
 
 ```js
 // Uncomment this line to print everything
 debug.enable(name + ':*')
 ```
+
+## Test
+
+*Requires [mosquitto](https://mosquitto.org/download/) to be installed.*
+
+```sh
+npm run test
+```
+
+**In test mode, i18n output and http calls are mocked.**
+
+- **http**: see `tests/httpMocks/index.ts`
+- **i18n**: see `src/factories/i18nFactory.ts`
+
+## Contributing
+
+Please see the [Contribution Guidelines](https://github.com/snipsco/snips-action-music/blob/master/CONTRIBUTING.md).
+
+## Copyright
+
+This library is provided by [Snips](https://snips.ai) as Open Source software. See [LICENSE](https://github.com/snipsco/snips-action-music/blob/master/LICENSE) for more information.
