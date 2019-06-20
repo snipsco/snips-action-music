@@ -1,5 +1,5 @@
 import { Handler } from './index'
-import { logger } from '../utils'
+import { logger } from 'snips-toolkit'
 
 export const resumeMusicHandler: Handler = async function (msg, flow, hermes, player, options) {
     logger.debug('resumeMusicHandler')

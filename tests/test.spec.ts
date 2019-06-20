@@ -1,7 +1,9 @@
-require('./helpers/setup').bootstrap()
+import { Test } from 'snips-toolkit'
+import {
+    createPokemonIdSlot
+} from './utils'
 
-import Session from './helpers/session'
-import { createPokemonIdSlot } from './utils'
+const { Session } = Test
 
 it('should query a Pokemon by its id and output its name', async () => {
     const session = new Session()

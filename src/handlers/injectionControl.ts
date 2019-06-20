@@ -1,7 +1,6 @@
 import { Handler } from './index'
-import { logger } from '../utils/logger'
-import { Injection } from 'hermes-javascript'
-import { message, translation } from '../utils'
+import { logger, i18n, message } from 'snips-toolkit'
+import { Enums } from 'hermes-javascript/types'
 
 function startInjection(hermes) {
     hermes.injection().publish('injection_request', {
@@ -9,7 +8,7 @@ function startInjection(hermes) {
         lexicon: {},
         operations: [
             [
-                Injection.enums.injectionKind.addFromVanilla,
+                Enums.injectionKind.addFromVanilla,
                 {
                     'snips/musicAlbum': [
                         'sweet baguette',
@@ -35,7 +34,7 @@ function deleteInjection(hermes) {
         lexicon: { },
         operations: [
             [
-                Injection.enums.injectionKind.addFromVanilla,
+                Enums.injectionKind.addFromVanilla,
                 {
                     'snips/musicAlbum': [
                         'fake'
@@ -60,9 +59,9 @@ export const injectionControlHandler: Handler = async function (msg, flow, herme
 
     if (res) {
         deleteInjection(hermes)
-        return translation.random('info.deleteInjection')
+        return i18n.randomTranslation('info.deleteInjection', {})
     } else {
         startInjection(hermes)
-        return translation.random('info.startInjection')
+        return i18n.randomTranslation('info.startInjection', {})
     }
 }

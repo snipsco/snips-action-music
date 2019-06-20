@@ -1,6 +1,6 @@
 import { Handler } from './index'
-import { logger, translation, message } from '../utils'
-import { NluSlot, slotType } from 'hermes-javascript'
+import { logger, i18n, message } from 'snips-toolkit'
+import { NluSlot, slotType } from 'hermes-javascript/types'
 
 export const getInfoHandler: Handler = async function (msg, flow, hermes, player, options) {
     logger.debug('getInfoHandler')
@@ -20,23 +20,23 @@ export const getInfoHandler: Handler = async function (msg, flow, hermes, player
 
     switch (slotValue) {
         case 'track':
-            return translation.random('info.reportTrack', {
+            return i18n.randomTranslation('info.reportTrack', {
                 track: info.title
             })
         case 'song':
-            return translation.random('info.reportTrack', {
+            return i18n.randomTranslation('info.reportTrack', {
                 track: info.title
             })
         case 'artist':
-            return translation.random('info.reportArtist', {
+            return i18n.randomTranslation('info.reportArtist', {
                 artist: info.artist
             })
         case 'album':
-            return translation.random('info.reportAlbum', {
+            return i18n.randomTranslation('info.reportAlbum', {
                 album: info.album
             })
         default:
-            return translation.random('info.playTrackArtist', {
+            return i18n.randomTranslation('info.playTrackArtist', {
                 track: info.title,
                 artist: info.artist
             })

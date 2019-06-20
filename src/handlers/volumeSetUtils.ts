@@ -1,5 +1,5 @@
-import { IntentMessage, slotType, NluSlot } from 'hermes-javascript'
-import { message, camelize } from '../utils'
+import { IntentMessage, slotType, NluSlot } from 'hermes-javascript/types'
+import { message, camelize } from 'snips-toolkit'
 import {
     VOLUME_MINIMUM,
     VOLUME_MAXIMUM
