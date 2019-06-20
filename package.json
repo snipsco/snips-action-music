@@ -26,8 +26,7 @@
     "typescript": "^3.5.2"
   },
   "dependencies": {
-    "mpc-js": "^1.2.1",
-    "snips-toolkit-runner": "^1.0.0"
+    "mpc-js": "^1.2.1"
   },
   "sandbox": [
     "fs",
