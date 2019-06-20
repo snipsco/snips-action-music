@@ -1,5 +1,5 @@
-import { message, logger, camelize } from '../utils'
-import { IntentMessage, slotType, NluSlot } from 'hermes-javascript'
+import { message, logger, camelize } from 'snips-toolkit'
+import { IntentMessage, slotType, NluSlot } from 'hermes-javascript/types'
 import {
     SCENARIO_TABLE
 } from '../constants'

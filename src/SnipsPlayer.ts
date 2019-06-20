@@ -1,5 +1,5 @@
 import { MPC } from 'mpc-js'
-import { logger } from './utils/logger'
+import { logger } from 'snips-toolkit'
 
 interface SnipsPlayerInitOptions {
     host?: string

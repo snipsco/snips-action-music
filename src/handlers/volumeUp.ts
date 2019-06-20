@@ -1,5 +1,5 @@
 import { Handler } from './index'
-import { logger, message } from '../utils'
+import { logger, message } from 'snips-toolkit'
 import { checkVolumeRange } from './volumeSetUtils'
 import {
     VOLOME_STEP_DEFAULT

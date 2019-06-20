@@ -1,5 +1,5 @@
 import { Handler } from './index'
-import { logger, translation } from '../utils'
+import { logger, i18n } from 'snips-toolkit'
 import { 
     musicInfoExtractor,
     musicInfoRes,
@@ -83,14 +83,14 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
         case 'A':
             return music.artistName ? 
             
-            translation.random(notFoundFlag ? 
+            i18n.randomTranslation(notFoundFlag ? 
                 'error.notFound.playTrackArtist':
                 'info.playTrackArtist', {
                 track: music.songName,
                 artist: music.artistName
             }): 
             
-            translation.random(notFoundFlag ? 
+            i18n.randomTranslation(notFoundFlag ? 
                 'error.notFound.playTrack':
                 'info.playTrack', {
                 track: music.songName
@@ -98,26 +98,26 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
         case 'B':
             return music.albumName ? 
             
-            translation.random(notFoundFlag ? 
+            i18n.randomTranslation(notFoundFlag ? 
                 'error.notFound.playAlbumArtist':
                 'info.playAlbumArtist', {
                 album: music.albumName,
                 artist: music.artistName
             }) : 
             
-            translation.random(notFoundFlag ? 
+            i18n.randomTranslation(notFoundFlag ? 
                 'error.notFound.playAlbum':
                 'info.playAlbum', {
                 album: music.albumName
             })
         case 'C':
-            return translation.random(notFoundFlag ?
+            return i18n.randomTranslation(notFoundFlag ?
                 'error.notFound.playArtist':
                 'info.playArtist', {
                 artist: music.artistName
             })
         case 'D': 
-            return translation.random(notFoundFlag ?
+            return i18n.randomTranslation(notFoundFlag ?
                 'error.notFound.playPlaylist':
                 'info.playPlaylist', {
                 playlist: music.playlistName

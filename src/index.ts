@@ -1,130 +1,136 @@
-import { withHermes, Dialog } from 'hermes-javascript'
-import bootstrap from './bootstrap'
-import { mode, translation, logger } from './utils'
-import { configFactory } from './factories'
+import { mode } from './utils'
 import { 
     onIntentDetected,
     onSessionToggle
 } from './binding'
 import { SnipsPlayer } from './SnipsPlayer'
 import { HandlerOptions } from './handlers'
+import { Hermes, Done } from 'hermes-javascript'
+import { config, i18n, logger } from 'snips-toolkit'
+import { Enums } from 'hermes-javascript/types'
 import {
-    CONFIDENCE_DEFAULT
+    INTENT_PROBABILITY_THRESHOLD,
+    INTENT_FILTER_PROBABILITY_THRESHOLD,
+    SLOT_CONFIDENCE_THRESHOLD,
+    ASR_UTTERANCE_CONFIDENCE_THRESHOLD
 } from './constants'
 
-// Initialize hermes
-export default function ({
-    hermesOptions = {},
-    bootstrapOptions = {}
-} = {}) : Promise<() => void>{
-    return new Promise((resolve, reject) => {
-        withHermes(async (hermes, done) => {
-            try {
-                // Bootstrap config, locale, i18n…
-                await bootstrap(bootstrapOptions)
-                const config = configFactory.get()
+// Enables deep printing of objects.
+process.env.DEBUG_DEPTH = undefined
 
-                const say: any = (text: string, siteId?: string) => {
-                    hermes.dialog().publish('start_session', {
-                        init: {
-                            type: Dialog.enums.initType.notification,
-                            text
-                        },
-                        siteId
-                    })
-                }
+export default async function ({
+    hermes,
+    done
+}: {
+    hermes: Hermes,
+    done: Done 
+}) {
+    try {
+        const { name } = require('../package.json')
+        logger.init(name)
+        // Replace 'error' with '*' to log everything
+        logger.enable('*')
+        logger.info('test1')
 
-                const onPlaying = () => {
-                    // Context control if it's enabled
-                    if(config.contextControl) {
-                        mode.setPlaying(hermes.dialog())
-                    }
+        config.init()
+        await i18n.init(config.get().locale)
 
-                    // Sound feedback control if it's enabled
-                    if(config.soundFeedbackControl) {
-                        hermes.feedback().publish('notification_off', {
-                            siteId: 'default'
-                        })
-                    }
-                }
+        const dialog = hermes.dialog()
 
-                const onPausing = () => {
-                    // Context control if it's enabled
-                    if(config.contextControl) {
-                        mode.setPausing(hermes.dialog())
-                    }
+        const say: any = (text: string, siteId?: string) => {
+            dialog.publish('start_session', {
+                init: {
+                    type: Enums.initType.notification,
+                    text
+                },
+                siteId
+            })
+        }
 
-                    // Sound feedback control if it's enabled
-                    if(config.soundFeedbackControl) {
-                        hermes.feedback().publish('notification_on', {
-                            siteId: 'default'
-                        })
-                    }
-                }
-
-                const onStopping = () => {
-                    // Context control if it's enabled
-                    if(config.contextControl) {
-                        mode.setInit(hermes.dialog())
-                    }
-
-                    // Sound feedback control if it's enabled
-                    if(config.soundFeedbackControl) {
-                        hermes.feedback().publish('notification_on', {
-                            siteId: 'default'
-                        })
-                    }
-                }
-
-                const musicPlayer = new SnipsPlayer({
-                    host: String(config.mpdHost) || 'localhost',
-                    port: Number(config.mpdPort) || 6600,
-                    volumeAutoReset: Boolean(config.volumeAutoReset) || undefined,
-                    volumeTimeout: Number(config.volumeTimeout) || undefined,
-                    playerMode: String(config.playerModeDefault) || undefined,
-                    onReady: () => say(translation.random('info.ready')),
-                    onDisconnect: () => say(translation.random('error.mpdConnectionEnd')),
-                    onConnectionFaild: () => say(translation.random('error.mpdConnectionFaild')),
-                    onPlaying,
-                    onPausing,
-                    onStopping
-                })
-
-                // connect to mpd server, retry for 3 times in case it's booting
-                await musicPlayer.connect(3, 30)
-
-                if (!config.contextControl) {
-                    mode.setAllEnabled(hermes.dialog())
-                }
-                
-                // subscribe to intent handlers
-                const handlerOptions: HandlerOptions = {
-                    confidenceScore: {
-                        intentStandard: Number(config.confidenceIntentStanderd) || CONFIDENCE_DEFAULT.INTENT_STANDARD,
-                        intentDrop: Number(config.confidenceIntentDrop) || CONFIDENCE_DEFAULT.INTENT_DROP,
-                        slotDrop: Number(config.confidenceSlotDrop) || CONFIDENCE_DEFAULT.SLOT_DROP,
-                        asrDrop: Number(config.confidenceAsrDrop) || CONFIDENCE_DEFAULT.ASR
-                    }
-                }
-
-                logger.debug(config)
-                //logger.debug(handlerOptions.confidenceScore)
-
-                onIntentDetected(hermes, musicPlayer, handlerOptions)
-                // subscribe to sessionStarted and sessionEnded
-                onSessionToggle(hermes, musicPlayer)
-    
-                resolve(done)
-            } catch (error) {
-                // Output initialization errors to stderr and exit
-                const message = await translation.errorMessage(error)
-                logger.error(message)
-                logger.error(error)
-                // Exit
-                done()
-                // Reject
-                reject(error)
+        const onPlaying = () => {
+            // Context control if it's enabled
+            if(config.get().contextControl) {
+                mode.setPlaying(dialog)
             }
-        }, hermesOptions)
-    })
+
+            // Sound feedback control if it's enabled
+            if(config.get().soundFeedbackControl) {
+                hermes.feedback().publish('notification_off', {
+                    siteId: 'default'
+                })
+            }
+        }
+
+        const onPausing = () => {
+            // Context control if it's enabled
+            if(config.get().contextControl) {
+                mode.setPausing(dialog)
+            }
+
+            // Sound feedback control if it's enabled
+            if(config.get().soundFeedbackControl) {
+                hermes.feedback().publish('notification_on', {
+                    siteId: 'default'
+                })
+            }
+        }
+
+        const onStopping = () => {
+            // Context control if it's enabled
+            if(config.get().contextControl) {
+                mode.setInit(dialog)
+            }
+
+            // Sound feedback control if it's enabled
+            if(config.get().soundFeedbackControl) {
+                hermes.feedback().publish('notification_on', {
+                    siteId: 'default'
+                })
+            }
+        }
+
+        const musicPlayer = new SnipsPlayer({
+            host: String(config.get().mpdHost) || 'localhost',
+            port: Number(config.get().mpdPort) || 6600,
+            volumeAutoReset: Boolean(config.get().volumeAutoReset) || undefined,
+            volumeTimeout: Number(config.get().volumeTimeout) || undefined,
+            playerMode: String(config.get().playerModeDefault) || undefined,
+            onReady: () => say(i18n.randomTranslation('info.ready', {})),
+            onDisconnect: () => say(i18n.randomTranslation('error.mpdConnectionEnd', {})),
+            onConnectionFaild: () => say(i18n.randomTranslation('error.mpdConnectionFaild', {})),
+            onPlaying,
+            onPausing,
+            onStopping
+        })
+
+        // connect to mpd server, retry for 3 times in case it's booting
+        await musicPlayer.connect(3, 30)
+
+        if (!config.get().contextControl) {
+            mode.setAllEnabled(dialog)
+        }
+        
+        // subscribe to intent handlers
+        const handlerOptions: HandlerOptions = {
+            confidenceScore: {
+                intentStandard: Number(config.get().confidenceIntentStanderd) || INTENT_PROBABILITY_THRESHOLD,
+                intentDrop: Number(config.get().confidenceIntentDrop) || INTENT_FILTER_PROBABILITY_THRESHOLD,
+                slotDrop: Number(config.get().confidenceSlotDrop) || SLOT_CONFIDENCE_THRESHOLD,
+                asrDrop: Number(config.get().confidenceAsrDrop) || ASR_UTTERANCE_CONFIDENCE_THRESHOLD
+            }
+        }
+
+        onIntentDetected(hermes, musicPlayer, handlerOptions)
+        // subscribe to sessionStarted and sessionEnded
+        onSessionToggle(hermes, musicPlayer)
+
+        console.log('test')
+    } catch (error) {
+        // Output initialization errors to stderr and exit
+        const message = await i18n.errorMessage(error)
+        logger.error(message)
+        logger.error(error)
+        // Exit
+        done()
+    }
 }

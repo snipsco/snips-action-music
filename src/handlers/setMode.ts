@@ -1,6 +1,6 @@
 import { Handler } from './index'
-import { logger, message } from '../utils'
-import { NluSlot, slotType } from 'hermes-javascript'
+import { logger, message } from 'snips-toolkit'
+import { NluSlot, slotType } from 'hermes-javascript/types'
 
 export const setModeHandler: Handler = async function (msg, flow, hermes, player, options) {
     logger.debug('setModeHandler')

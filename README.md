@@ -43,11 +43,11 @@ This app only supports french 🇫🇷 and english 🇬🇧.
 
 ## Debug
 
-In the `action-music.js` file:
+In the `src/index.ts` file:
 
 ```js
 // Uncomment this line to print everything
-debug.enable(name + ':*')
+// debug.enable(name + ':*')
 ```
 
 ## Test

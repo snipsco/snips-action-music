@@ -1,5 +1,5 @@
 import { Handler } from './index'
-import { logger } from '../utils'
+import { logger } from 'snips-toolkit'
 
 export const playRandomHandler: Handler = async function (msg, flow, hermes, player) {
     logger.debug('playRandom')

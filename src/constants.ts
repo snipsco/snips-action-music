@@ -1,10 +1,3 @@
-export const DEFAULT_LOCALE = 'english'
-export const SUPPORTED_LOCALES = ['english', 'french']
-export const DEFAULT_LANGUAGE = 'en'
-export const LANGUAGE_MAPPINGS = {
-    english: 'en',
-    french: 'fr'
-}
 export const DEFAULT_MQTT_CONNECTION = {
     host: 'localhost',
     port: 1883
@@ -13,17 +6,11 @@ export const DEFAULT_MPD_CONNECTION = {
     host: 'localhost',
     port: 6600
 }
-
 export const SNIPS_PREFIX = 'snips-assistant:'
-//export const SNIPS_PREFIX = 'coorfang:'
-
-export const CONFIDENCE_DEFAULT = {
-    INTENT_STANDARD: 0.5,
-    INTENT_DROP: 0.3,
-    SLOT_DROP: 0.5,
-    ASR: 0.2
-}
-
+export const INTENT_PROBABILITY_THRESHOLD: number =  0.5
+export const INTENT_FILTER_PROBABILITY_THRESHOLD: number =  0.3
+export const SLOT_CONFIDENCE_THRESHOLD: number =  0.5
+export const ASR_UTTERANCE_CONFIDENCE_THRESHOLD: number =  0.2
 // Binary table used to decide scenario by 2 input factor
 // Weight: song - 8, album - 4, artist - 2, playlist - 1
 export const SCENARIO_TABLE = {
