@@ -29,8 +29,6 @@
     "snips-toolkit": "^1.0.1"
   },
   "sandbox": [
-    "assert",
-    "buffer",
     "fs",
     "net",
     "path",

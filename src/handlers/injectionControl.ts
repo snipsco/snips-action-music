@@ -1,6 +1,6 @@
 import { Handler } from './index'
 import { logger, i18n, message } from 'snips-toolkit'
-import { Injection } from 'hermes-javascript'
+import { Enums } from 'hermes-javascript/types'
 
 function startInjection(hermes) {
     hermes.injection().publish('injection_request', {
@@ -8,7 +8,7 @@ function startInjection(hermes) {
         lexicon: {},
         operations: [
             [
-                Injection.enums.injectionKind.addFromVanilla,
+                Enums.injectionKind.addFromVanilla,
                 {
                     'snips/musicAlbum': [
                         'sweet baguette',
@@ -34,7 +34,7 @@ function deleteInjection(hermes) {
         lexicon: { },
         operations: [
             [
-                Injection.enums.injectionKind.addFromVanilla,
+                Enums.injectionKind.addFromVanilla,
                 {
                     'snips/musicAlbum': [
                         'fake'
