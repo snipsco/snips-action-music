@@ -122,8 +122,6 @@ export default async function ({
         onIntentDetected(hermes, musicPlayer, handlerOptions)
         // subscribe to sessionStarted and sessionEnded
         onSessionToggle(hermes, musicPlayer)
-
-        console.log('test')
     } catch (error) {
         // Output initialization errors to stderr and exit
         const message = await i18n.errorMessage(error)
