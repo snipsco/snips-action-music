@@ -1,4 +1,4 @@
-# snips-action-mpd
+# snips-action-music
 
 Snips action code for the Music app
 
@@ -32,7 +32,7 @@ npm run dev
 # 1) Lint, transpile and test.
 npm start
 # 2) Compile and run the action.
-node action-snips.js
+node action-music.js
 ```
 
 ## Test & Demo cases
@@ -41,7 +41,7 @@ This app only supports french 🇫🇷 and english 🇬🇧.
 
 ## Debug
 
-In the `action-snips.js` file:
+In the `action-music.js` file:
 
 ```js
 // Uncomment this line to print everything
@@ -63,8 +63,8 @@ npm run test
 
 ## Contributing
 
-Please see the [Contribution Guidelines](https://github.com/snipsco/snips-action-mpd/blob/master/CONTRIBUTING.md).
+Please see the [Contribution Guidelines](https://github.com/snipsco/snips-action-music/blob/master/CONTRIBUTING.md).
 
 ## Copyright
 
-This library is provided by [Snips](https://snips.ai) as Open Source software. See [LICENSE](https://github.com/snipsco/snips-action-mpd/blob/master/LICENSE) for more information.
+This library is provided by [Snips](https://snips.ai) as Open Source software. See [LICENSE](https://github.com/snipsco/snips-action-music/blob/master/LICENSE) for more information.
