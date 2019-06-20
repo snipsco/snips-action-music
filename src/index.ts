@@ -70,7 +70,7 @@ export default function ({
 
                     // Sound feedback control if it's enabled
                     if(config.soundFeedbackControl) {
-                        hermes.feedback().publish('notification_off', {
+                        hermes.feedback().publish('notification_on', {
                             siteId: 'default'
                         })
                     }
