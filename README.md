@@ -4,6 +4,8 @@ Snips action code for the Music app
 
 Handles Snips dialogue output, converts structured date to some specific commands to control a target music player.
 
+[![Build Status](https://travis-ci.org/snipsco/snips-action-music.svg?branch=master)](https://travis-ci.org/snipsco/snips-action-music)
+
 ## Setup
 
 ```sh
@@ -58,8 +60,8 @@ npm run test
 
 **In test mode, i18n output and http calls are mocked.**
 
-- **http**: see `tests/httpMocks/index.ts`
-- **i18n**: see `src/factories/i18nFactory.ts`
+- **http**: mocks are written in `tests/httpMocks/index.ts`
+- **i18n**: mocked by `snips-toolkit`, see the [documentation](https://github.com/snipsco/snips-javascript-toolkit#i18n).
 
 ## Contributing
 
