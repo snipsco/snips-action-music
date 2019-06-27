@@ -32,7 +32,6 @@
   "sandbox": [
     "fs",
     "net",
-    "os",
     "path",
     "tty",
     "util"

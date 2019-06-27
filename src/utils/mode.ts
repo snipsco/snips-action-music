@@ -1,6 +1,5 @@
 import { Dialog } from 'hermes-javascript'
-import { 
-    SNIPS_PREFIX,
+import {
     MODE_ALWAYS_ENABLED,
     MODE_INIT_DISABLED,
     MODE_PLAYING_ENABLED,
@@ -10,6 +9,7 @@ import {
     MODE_ALWAYS_DISABLED,
     INTENTS
 } from '../constants'
+import { config } from 'snips-toolkit'
 
 interface intentConfiguration {
     intentId: string
@@ -21,7 +21,7 @@ function getIntentList(enabledIntent: string[], disabledIntent: string[]): inten
     // add always enabled intent to the list
     MODE_ALWAYS_ENABLED.forEach(intent => {
         res.push({
-            intentId: `${SNIPS_PREFIX}${intent}`,
+            intentId: `${ config.get().assistantPrefix }:${ intent }`,
             enable: true
         })
     })
@@ -29,7 +29,7 @@ function getIntentList(enabledIntent: string[], disabledIntent: string[]): inten
     if (MODE_ALWAYS_DISABLED.length > 0) {
         MODE_ALWAYS_DISABLED.forEach(intent => {
             res.push({
-                intentId: `${SNIPS_PREFIX}${intent}`,
+                intentId: `${ config.get().assistantPrefix }:${ intent }`,
                 enable: false
             })
         })
@@ -38,14 +38,14 @@ function getIntentList(enabledIntent: string[], disabledIntent: string[]): inten
     // add specific enabled intent to the list
     enabledIntent.forEach(intent => {
         res.push({
-            intentId: `${SNIPS_PREFIX}${intent}`,
+            intentId: `${ config.get().assistantPrefix }:${ intent }`,
             enable: true
         })
     })
     // add disabled intent to the list
     disabledIntent.forEach(intent => {
         res.push({
-            intentId: `${SNIPS_PREFIX}${intent}`,
+            intentId: `${ config.get().assistantPrefix }:${ intent }`,
             enable: false
         })
     })
@@ -58,7 +58,7 @@ export const mode = {
         const intentList = new Array()
         INTENTS.forEach(intent => {
             intentList.push({
-                intentId: `${SNIPS_PREFIX}${intent}`,
+                intentId: `${ config.get().assistantPrefix }:${ intent }`,
                 enable: true
             })
         })

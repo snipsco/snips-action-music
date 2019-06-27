@@ -6,7 +6,6 @@ export const DEFAULT_MPD_CONNECTION = {
     host: 'localhost',
     port: 6600
 }
-export const SNIPS_PREFIX = 'snips-assistant:'
 export const INTENT_PROBABILITY_THRESHOLD: number =  0.5
 export const INTENT_FILTER_PROBABILITY_THRESHOLD: number =  0.3
 export const SLOT_CONFIDENCE_THRESHOLD: number =  0.5
