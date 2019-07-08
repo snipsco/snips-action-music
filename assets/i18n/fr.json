@@ -63,6 +63,9 @@
             "playPlaylist": [
                 "Désolé, je ne trouve pas de playlist appelée {{ playlist }} dans ma bibliothèque locale.",
                 "Je ne vois pas de playlist {{ playlist }} dans ma bibliothèque hors connexion."
+            ],
+            "playRandom": [
+                "Désolé, je ne trouve aucune playlist dans ma bibliothèque hors connexion."
             ]
         },
         "nothingPlaying": [
