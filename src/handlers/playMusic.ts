@@ -96,7 +96,7 @@ export const playMusicHandler: Handler = async function (msg, flow, hermes, play
                 track: music.songName
             })
         case 'B':
-            return music.albumName ? 
+            return music.artistName ? 
             
             i18n.randomTranslation(notFoundFlag ? 
                 'error.notFound.playAlbumArtist':
