@@ -14,13 +14,7 @@ import { setModeHandler } from './setMode'
 import { selfIntroductionHandler } from './selfIntroduction'
 import { SnipsPlayer } from '../SnipsPlayer'
 import { FlowContinuation, IntentMessage, FlowActionReturn, Hermes } from 'hermes-javascript'
-import { INTENT_PROBABILITY_THRESHOLD, ASR_UTTERANCE_CONFIDENCE_THRESHOLD } from '../constants'
 import { logger, i18n, message } from 'snips-toolkit'
-
-const thresholds: ConfidenceThresholds = {
-    intent: 0,
-    asr: 0
-}
 
 export type Handler = (
     message: IntentMessage,
@@ -66,7 +60,7 @@ const handlerWrapperCustom = (handler: Handler): Handler => (
             return tts
         } catch (error) {
             flow.end()
-            logger.error(error)
+            logger.error(error.message)
             return await i18n.randomTranslation('error.' + error.message, {})
         }
     }
@@ -74,19 +68,19 @@ const handlerWrapperCustom = (handler: Handler): Handler => (
 
 // Add handlers here, and wrap them.
 export default {
-    playMusic: handler.wrap(handlerWrapperCustom(playMusicHandler), thresholds),
-    playRandom: handler.wrap(handlerWrapperCustom(playRandomHandler), thresholds),
-    previousSong: handler.wrap(handlerWrapperCustom(previousSongHandler), thresholds),
-    nextSong: handler.wrap(handlerWrapperCustom(nextSongHandler), thresholds),
-    speakerInterrupt: handler.wrap(handlerWrapperCustom(speakerInterruptHandler), thresholds),
-    resumeMusic: handler.wrap(handlerWrapperCustom(resumeMusicHandler), thresholds),
-    volumeUp: handler.wrap(handlerWrapperCustom(volumeUpHandler), thresholds),
-    volumeDown: handler.wrap(handlerWrapperCustom(volumeDownHandler), thresholds),
-    volumeSet: handler.wrap(handlerWrapperCustom(volumeSetHandler), thresholds),
-    getInfo: handler.wrap(handlerWrapperCustom(getInfoHandler), thresholds),
-    injectionControl: handler.wrap(handlerWrapperCustom(injectionControlHandler), thresholds),
-    setMode: handler.wrap(handlerWrapperCustom(setModeHandler), thresholds),
-    selfIntroduction: handler.wrap(handlerWrapperCustom(selfIntroductionHandler), thresholds)
+    playMusic: handler.wrap(handlerWrapperCustom(playMusicHandler)),
+    playRandom: handler.wrap(handlerWrapperCustom(playRandomHandler)),
+    previousSong: handler.wrap(handlerWrapperCustom(previousSongHandler)),
+    nextSong: handler.wrap(handlerWrapperCustom(nextSongHandler)),
+    speakerInterrupt: handler.wrap(handlerWrapperCustom(speakerInterruptHandler)),
+    resumeMusic: handler.wrap(handlerWrapperCustom(resumeMusicHandler)),
+    volumeUp: handler.wrap(handlerWrapperCustom(volumeUpHandler)),
+    volumeDown: handler.wrap(handlerWrapperCustom(volumeDownHandler)),
+    volumeSet: handler.wrap(handlerWrapperCustom(volumeSetHandler)),
+    getInfo: handler.wrap(handlerWrapperCustom(getInfoHandler)),
+    injectionControl: handler.wrap(handlerWrapperCustom(injectionControlHandler)),
+    setMode: handler.wrap(handlerWrapperCustom(setModeHandler)),
+    selfIntroduction: handler.wrap(handlerWrapperCustom(selfIntroductionHandler))
 }
 
 export * from './sessionEnded'

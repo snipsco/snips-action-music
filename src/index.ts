@@ -93,6 +93,7 @@ export default async function ({
             port: Number(config.get().mpdPort) || 6600,
             volumeAutoReset: Boolean(config.get().volumeAutoReset) || undefined,
             volumeTimeout: Number(config.get().volumeTimeout) || undefined,
+            defaultVolume: Number(config.get().defaultVolume) || undefined,
             playerMode: String(config.get().playerModeDefault) || undefined,
             onReady: () => say(i18n.randomTranslation('info.ready', {})),
             onDisconnect: () => say(i18n.randomTranslation('error.mpdConnectionEnd', {})),
