@@ -11,6 +11,8 @@ mpd_port=6600
 volume_auto_reset=false
 volume_timeout=60
 
+default_volume=80
+
 # Default order of playing, available value: random, repeat, single, sequence
 player_mode_default=random
 
