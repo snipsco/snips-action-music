@@ -46,10 +46,10 @@ export default async function ({
             })
         }
 
-        const onPlaying = () => {
+        const onPlaying = (player) => {
             // Context control if it's enabled
             if(config.get().contextControl) {
-                mode.setPlaying(dialog)
+                mode.setPlaying(dialog, player.siteId)
             }
 
             // Sound feedback control if it's enabled
@@ -60,54 +60,79 @@ export default async function ({
             }
         }
 
-        const onPausing = () => {
+        const onPausing = (player) => {
             // Context control if it's enabled
             if(config.get().contextControl) {
-                mode.setPausing(dialog)
+                mode.setPausing(dialog, player.siteId)
             }
 
             // Sound feedback control if it's enabled
             if(config.get().soundFeedbackControl) {
                 hermes.feedback().publish('notification_on', {
-                    siteId: 'default'
+                    siteId: player.siteId
                 })
             }
         }
 
-        const onStopping = () => {
+        const onStopping = (player) => {
             // Context control if it's enabled
             if(config.get().contextControl) {
-                mode.setInit(dialog)
+                mode.setInit(dialog, player.siteId)
             }
 
             // Sound feedback control if it's enabled
             if(config.get().soundFeedbackControl) {
                 hermes.feedback().publish('notification_on', {
-                    siteId: 'default'
+                    siteId: player.siteId
                 })
             }
         }
 
-        const musicPlayer = new SnipsPlayer({
-            host: String(config.get().mpdHost) || 'localhost',
-            port: Number(config.get().mpdPort) || 6600,
+        const musicPlayers = [
+            new SnipsPlayer({
+                host: String(config.get().mpdHost) || 'localhost',
+                port: Number(config.get().mpdPort) || 6600,
+                siteId: config.get().mpdSiteId || 'default',
+                volumeAutoReset: Boolean(config.get().volumeAutoReset) || undefined,
+                volumeTimeout: Number(config.get().volumeTimeout) || undefined,
+                defaultVolume: Number(config.get().defaultVolume) || undefined,
+                playerMode: String(config.get().playerModeDefault) || undefined,
+                onReady: (player) => say(i18n.randomTranslation('info.ready', {}), player.siteId),
+                onDisconnect: (player) => say(i18n.randomTranslation('error.mpdConnectionEnd', {}), player.siteId),
+                onConnectionFaild: (player) => say(i18n.randomTranslation('error.mpdConnectionFaild', {}), player.siteId),
+                onPlaying,
+                onPausing,
+                onStopping
+            })
+    ]
+    if (config.get().mpdHost2){
+        musicPlayers.push(new SnipsPlayer({
+            host: String(config.get().mpdHost2),
+            port: Number(config.get().mpdPort2) || 6600,
+            siteId: config.get().mpdSiteId2 || 'default',
             volumeAutoReset: Boolean(config.get().volumeAutoReset) || undefined,
             volumeTimeout: Number(config.get().volumeTimeout) || undefined,
             defaultVolume: Number(config.get().defaultVolume) || undefined,
             playerMode: String(config.get().playerModeDefault) || undefined,
-            onReady: () => say(i18n.randomTranslation('info.ready', {})),
-            onDisconnect: () => say(i18n.randomTranslation('error.mpdConnectionEnd', {})),
-            onConnectionFaild: () => say(i18n.randomTranslation('error.mpdConnectionFaild', {})),
+                onReady: (player) => say(i18n.randomTranslation('info.ready', {}), player.siteId),
+                onDisconnect: (player) => say(i18n.randomTranslation('error.mpdConnectionEnd', {}), player.siteId),
+                onConnectionFaild: (player) => say(i18n.randomTranslation('error.mpdConnectionFaild', {}), player.siteId),
             onPlaying,
             onPausing,
             onStopping
-        })
+        }))
+    }
 
         // connect to mpd server, retry for 3 times in case it's booting
-        await musicPlayer.connect(3, 30)
+	await Promise.all(musicPlayers.map(async (musicPlayer) => {
+		console.log(musicPlayer)
+            return musicPlayer.connect(3, 30)
+        }))
 
         if (!config.get().contextControl) {
-            mode.setAllEnabled(dialog)
+            musicPlayers.forEach(musicPlayer =>{
+            mode.setAllEnabled(dialog, musicPlayer.siteId)
+            })
         }
         
         // subscribe to intent handlers
@@ -120,9 +145,9 @@ export default async function ({
             }
         }
 
-        onIntentDetected(hermes, musicPlayer, handlerOptions)
+        onIntentDetected(hermes, musicPlayers, handlerOptions)
         // subscribe to sessionStarted and sessionEnded
-        onSessionToggle(hermes, musicPlayer)
+        onSessionToggle(hermes, musicPlayers)
     } catch (error) {
         // Output initialization errors to stderr and exit
         const message = await i18n.errorMessage(error)

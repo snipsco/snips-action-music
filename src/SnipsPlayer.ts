@@ -15,6 +15,7 @@ interface SnipsPlayerInitOptions {
     onPlaying?: any
     onPausing?: any
     onStopping?: any
+    siteId: string
 }
 
 enum PlayerMode {
@@ -63,6 +64,8 @@ export class SnipsPlayer {
     onPausing: any = null
     onStopping: any = null
 
+    siteId:string= 'default'
+
     constructor(options: SnipsPlayerInitOptions) {
         this.player = new MPC()
 
@@ -79,6 +82,7 @@ export class SnipsPlayer {
         this.onPlaying = options.onPlaying || null
         this.onPausing = options.onPausing || null
         this.onStopping = options.onStopping || null
+        this.siteId = options.siteId || 'default'
         this.startMonitoring()
     }
 
@@ -111,18 +115,18 @@ export class SnipsPlayer {
     private startMonitoring() {
         this.player.addListener('ready', () => {
             this.init()
-            this.onReady()
+            this.onReady(this)
         })
     
         this.player.addListener('socket-error', () => {
             this.isReady = false
-            this.onConnectionFaild()
+            this.onConnectionFaild(this)
             throw new Error('mpdConnectionFaild')
         })
         
         this.player.addListener('socket-end', () => {
             this.isReady = false
-            this.onDisconnect()
+            this.onDisconnect(this)
             throw new Error('mpdConnectionEnd')
         })
 
@@ -139,15 +143,15 @@ export class SnipsPlayer {
                 }
 
                 if (status.state == 'play') {
-                    this.onPlaying()
+                    this.onPlaying(this)
                 }
 
                 if (status.state == 'pause') {
-                    this.onPausing()
+                    this.onPausing(this)
                 }
 
                 if (status.state == 'stop') {
-                    this.onStopping()
+                    this.onStopping(this)
                 }
             })
         })
@@ -167,7 +171,7 @@ export class SnipsPlayer {
                 this.setMode()
             })
             .then(() => {
-                this.onStopping()
+                this.onStopping(this)
             })
             .catch( error => {
                 logger.error('There is an error detected when initialising the player')

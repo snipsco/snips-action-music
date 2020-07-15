@@ -23,6 +23,13 @@ export type Handler = (
     player: SnipsPlayer,
     options: HandlerOptions
 ) => FlowActionReturn
+type Handlers = (
+    message: IntentMessage,
+    flow: FlowContinuation,
+    hermes: Hermes,
+    players: SnipsPlayer[],
+    options: HandlerOptions
+) => FlowActionReturn
 
 export interface HandlerOptions {
     confidenceScore: ConfidenceScore
@@ -38,8 +45,8 @@ interface ConfidenceScore {
 }
 
 // Wrap handlers to gracefully capture errors
-const handlerWrapperCustom = (handler: Handler): Handler => (
-    async (msg, flow, hermes, player, options) => {
+const handlerWrapperCustom = (handler: Handler): Handlers => (
+    async (msg, flow, hermes, players, options) => {
         //logger.debug('message: %O', msg)
         try {
             // Check confidenceScore before call the handler
@@ -53,8 +60,8 @@ const handlerWrapperCustom = (handler: Handler): Handler => (
         
             if (message.getAsrConfidence(msg) < options.confidenceScore.asrDrop) {
                 throw new Error('asrError')
-            }
-
+	    }
+            const player = players.find(player => player.siteId == msg.customData) || players.find(player => player.siteId == msg.siteId) || players[0]
             const tts = await handler(msg, flow, hermes, player, options)
 
             return tts

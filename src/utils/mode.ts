@@ -54,7 +54,7 @@ function getIntentList(enabledIntent: string[], disabledIntent: string[]): inten
 }
 
 export const mode = {
-    setAllEnabled(dialog: Dialog) {
+    setAllEnabled(dialog: Dialog, siteId:string) {
         const intentList = new Array()
         INTENTS.forEach(intent => {
             intentList.push({
@@ -63,28 +63,28 @@ export const mode = {
             })
         })
         dialog.publish('configure', {
-            siteId: 'default',
+            siteId: siteId,
             intents: intentList
         })
     },
-    setInit(dialog: Dialog) {
+    setInit(dialog: Dialog, siteId:string) {
         const intentList = getIntentList([], MODE_INIT_DISABLED)
         dialog.publish('configure', {
-            siteId: 'default',
+            siteId: siteId,
             intents: intentList
         })
     },
-    setPlaying(dialog: Dialog) {
+    setPlaying(dialog: Dialog, siteId:string) {
         const intentList = getIntentList(MODE_PLAYING_ENABLED, MODE_PLAYING_DISABLED)
         dialog.publish('configure', {
-            siteId: 'default',
+            siteId: siteId,
             intents: intentList
         })
     },
-    setPausing(dialog: Dialog) {
+    setPausing(dialog: Dialog, siteId:string) {
         const intentList = getIntentList(MODE_PAUSING_ENABLED, MODE_PAUSING_DISABLED)
         dialog.publish('configure', {
-            siteId: 'default',
+            siteId: siteId,
             intents: intentList
         })
     }

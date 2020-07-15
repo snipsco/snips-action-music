@@ -19,6 +19,11 @@ This project is based on [mpd](https://www.musicpd.org/) and a JavaScript librar
 
 An assistant containing the intents listed below must be installed on your system. Deploy it following [these instructions](https://docs.snips.ai/articles/console/actions/deploy-your-assistant).
 
+To add a second mpd server add in the config file:
+
+mpd_host2=<hostname>
+mpd_site_id2=<siteId>
+
 ## Run
 
 - Dev mode:
